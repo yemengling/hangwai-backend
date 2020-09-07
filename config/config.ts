@@ -46,37 +46,61 @@ export default defineConfig({
           component: '../layouts/BasicLayout',
           authority: ['admin', 'user'],
           routes: [
+            // {
+            //   path: '/',
+            //   redirect: '/welcome',
+            // },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            //   authority: ['admin'],
+            //   routes: [
+            //     {
+            //       path: '/admin/sub-page',
+            //       name: 'sub-page',
+            //       icon: 'smile',
+            //       component: './Welcome',
+            //       authority: ['admin'],
+            //     },
+            //   ],
+            // },
+            // {
+            //   name: 'list.table-list',
+            //   icon: 'table',
+            //   path: '/list',
+            //   component: './ListTableList',
+            // },
             {
-              path: '/',
-              redirect: '/welcome',
-            },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
+              name: '数据管理',
+              icon: 'database',
+              path: '/dataManage',
               routes: [
                 {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
+                  path: '/dataManage/addInfo',
+                  name: '信息录入',
+                  component: './dataManage/addInfo/AddInfo',
                 },
               ],
             },
             {
-              name: 'list.table-list',
-              icon: 'table',
-              path: '/list',
-              component: './ListTableList',
+              name: '系统设置',
+              icon: 'setting',
+              path: '/systemManage',
+              routes: [
+                {
+                  path: '/systemManage/addRole',
+                  name: '用户权限',
+                  component: './systemManage/addRole/AddRole',
+                },
+              ],
             },
             {
               component: './404',
