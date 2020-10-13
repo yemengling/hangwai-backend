@@ -46,16 +46,16 @@ export default defineConfig({
           component: '../layouts/BasicLayout',
           authority: ['admin', 'user'],
           routes: [
-            // {
-            //   path: '/',
-            //   redirect: '/welcome',
-            // },
-            // {
-            //   path: '/welcome',
-            //   name: 'welcome',
-            //   icon: 'smile',
-            //   component: './Welcome',
-            // },
+            {
+              path: '/',
+              redirect: '/welcome',
+            },
+            {
+              path: '/welcome',
+              name: 'welcome',
+              icon: 'smile',
+              component: './Welcome',
+            },
             // {
             //   path: '/admin',
             //   name: 'admin',
@@ -84,9 +84,19 @@ export default defineConfig({
               path: '/dataManage',
               routes: [
                 {
-                  path: '/dataManage/addInfo',
-                  name: '信息录入',
-                  component: './dataManage/addInfo/AddInfo',
+                  path: '/dataManage/showChart',
+                  name: '图表统计',
+                  component: './dataManage/showChart/ShowChart',
+                },
+                {
+                  path: '/dataManage/schoolList',
+                  name: '学校录入',
+                  component: './dataManage/schoolList/SchoolList',
+                },
+                {
+                  path: '/dataManage/studentList',
+                  name: '学生录入',
+                  component: './dataManage/studentList/StudentList',
                 },
               ],
             },
