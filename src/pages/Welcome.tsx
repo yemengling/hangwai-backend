@@ -13,8 +13,9 @@ const CodePreview: React.FC<{}> = ({ children }) => (
 
 export default (): React.ReactNode => (
   <PageHeaderWrapper>
-    <Card>
-      <Alert
+    <Card title="杭外管理后台">
+      数据处理
+      {/* <Alert
         message="umi ui 现已发布，点击右下角 umi 图标即可使用"
         type="success"
         showIcon
@@ -44,7 +45,7 @@ export default (): React.ReactNode => (
           获取全部区块
         </a>
       </Typography.Text>
-      <CodePreview> npm run fetch:blocks</CodePreview>
+      <CodePreview> npm run fetch:blocks</CodePreview> */}
     </Card>
     <p
       style={{
