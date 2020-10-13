@@ -106,9 +106,9 @@ export default defineConfig({
               path: '/systemManage',
               routes: [
                 {
-                  path: '/systemManage/addRole',
+                  path: '/systemManage/setRole',
                   name: '用户权限',
-                  component: './systemManage/addRole/AddRole',
+                  component: './systemManage/setRole/SetRole',
                 },
               ],
             },
