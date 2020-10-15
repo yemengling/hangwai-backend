@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
-import { onChangePage, onChangePageSize } from '@/utils/myUtils/commonUtils';
+import { 
+  codeResult,
+  notifications, 
+  updateCurrentPage, 
+  onChangePage, 
+  onChangePageSize 
+} from '@/utils/myUtils/commonUtils';
 import StandardTable from '@/components/StandardTable';
+import AddSchoolListView from "@/pages/dataManage/schoolList/sub/AddSchoolListView";
+import UpdateSchoolListView from "@/pages/dataManage/schoolList/sub/UpdateSchoolListView";
 
 // 权限名称
 const listAuth = 'schoolList';
 const opreAuth = {
   add: 'schoolList_add',
   update: 'schoolList_update',
-  delete: 'schoolList_del',
+  delete: 'schoolList_delelte'
 };
 
 // 字段名称
@@ -18,7 +26,7 @@ export const schoolListFieldName = {
   id: 'ID',
   city: '城区',
   school: '学校',
-  operate: '操作',
+  operate: '操作'
 };
 
 // modelsname
@@ -26,10 +34,10 @@ const modelsName = 'schoolList';
 
 const SchoolList = (props) => {
   const {
-    schoolList: { pagination, data, isSearch },
+    schoolList: { isSearch, pagination, data },
     loading,
     dispatch,
-    exGlobal: { menuData },
+    exGlobal: { menuData }
   } = props;
 
   // 获取操作的权限
@@ -38,6 +46,9 @@ const SchoolList = (props) => {
 
   // state
   // const [selectedRows, setSelectedRows] = useState([]);
+  const [addVisable, setAddVisable] = useState(false);
+  const [updateVisable, setUpdateVisable] = useState(false);
+  const [recordData, setRecordData] = useState({});
 
   // columns
   const columns = [
@@ -58,26 +69,116 @@ const SchoolList = (props) => {
     },
     {
       title: schoolListFieldName['operate'],
-      dataIndex: 'operate',
       key: 'operate',
       render: (rec) => (
         <>
           {authDetail.update === true && <a onClick={() => handleUpdate(rec)}>编辑</a>}
           {authDetail.delete === true && (
-            <Popconfirm title="确认删除?" onConfirm={() => this.handleDelete(rec)}>
+            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(rec.id)}>
               <a>删除</a>
             </Popconfirm>
           )}
         </>
-      ),
+      )
     },
   ];
 
+
+  // 新增
+  const handleAdd = () => {
+    setAddVisable(true);
+  };
+  const addSubmit = (value) => {
+    const { dispatch } = props;
+    const submitData = value;
+
+    dispatch({
+      type: `${modelsName}/addSchoolInfo`,
+      payload: submitData
+    }).then((res) => {
+      if (codeResult(res)) {
+        // 成功
+        updateCurrentPage({ 
+          isSearch, 
+          pagination,   
+          method: getCurrentList 
+        });
+        onCancels();
+        notifications('success', '操作成功', '');
+      } else {
+        // 失败
+        notifications('error', '系统提示', res.message);
+      }
+    });
+  };
+
   // 编辑
-  const handleUpdate = (data) => {};
+  const handleUpdate = (data) => {
+    setRecordData(data);
+    setUpdateVisable(true);
+  };
+  const updateSubmit = (data) => {
+    const { dispatch } = props;
+    const submitData = data;
+
+    submitData.id = recordData.id;
+
+    dispatch({
+      type: `${modelsName}/updateSchoolInfo`,
+      payload: submitData
+    }).then((res) => {
+      if (codeResult(res)) {
+        // 成功
+        notifications('success', '操作成功', '');
+
+        updateCurrentPage({ 
+          isSearch, 
+          pagination,   
+          method: getCurrentList 
+        });
+        onCancels();
+      } else {
+        // 失败
+        notifications('error', '系统提示', res.message);
+      }
+    });
+  };
 
   // 删除
-  const handelDelete = (data) => {};
+  const handleDelete = (id) => {
+    const { dispatch } = props;
+    const submitData = {
+      id
+    }
+
+    dispatch({
+      type: `${modelsName}/deleteSchoolInfo`,
+      payload: submitData
+    }).then((res) => {
+      if (codeResult(res)) {
+        // 成功
+        notifications('success', '操作成功', '');
+
+        updateCurrentPage({ 
+          isSearch, 
+          pagination,   
+          method: getCurrentList 
+        });
+        onCancels();
+      } else {
+        // 失败
+        notifications('error', '系统提示', res.message);
+      }
+    });
+  };
+
+  // 弹窗-取消
+  const onCancels = () => {
+    setAddVisable(false);
+    setUpdateVisable(false);
+    setRecordData({});
+  };
+
 
   // 分页页码
   const onChang = (pageNumber) => {
@@ -110,7 +211,7 @@ const SchoolList = (props) => {
     dispatch({
       type: `${modelsName}/getSchoolList`,
       payload: {
-        ...params,
+        ...params
       },
     }).then((res) => {
       console.log('res___', res);
@@ -120,26 +221,31 @@ const SchoolList = (props) => {
   // didMount
   useEffect(() => {
     dispatch({
-      type: `${modelsName}/clearAll`,
+      type: `${modelsName}/clearAll`
     });
 
     getCurrentList({
       pageIndex: 1,
       pageSize: pagination.currentPageSize,
-      totalCount: pagination.currentPageSize,
+      totalCount: pagination.currentPageSize
     });
 
     dispatch({
       type: `${modelsName}/savePagination`,
       payload: {
         ...pagination,
-        current: 1,
+        current: 1
       },
     });
   }, []);
 
   return (
     <React.Fragment>
+      {
+        authDetail.add === true &&
+        <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
+      }
+
       <StandardTable
         rowKey="id"
         loading={loading}
@@ -153,6 +259,21 @@ const SchoolList = (props) => {
         onChange={onChang}
         onShowSizeChange={onShowSizeChange}
       />
+
+      <AddSchoolListView
+        modalVisible={addVisable}
+        title="新增"
+        okHandle={addSubmit}
+        onCancel={onCancels}
+      />
+
+      <UpdateSchoolListView
+        modalVisible={updateVisable}
+        title="编辑"
+        recordData={recordData}
+        okHandle={updateSubmit}
+        onCancel={onCancels}
+      />
     </React.Fragment>
   );
 };
@@ -160,5 +281,5 @@ const SchoolList = (props) => {
 export default connect(({ schoolList, loading, exGlobal }) => ({
   schoolList,
   loading: loading.models.schoolList,
-  exGlobal,
+  exGlobal
 }))(SchoolList);

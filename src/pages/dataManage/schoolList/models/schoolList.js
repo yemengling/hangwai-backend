@@ -1,9 +1,13 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getSchoolList } from '@/services/dataManage/schoolListApi';
+import { getSchoolList, addSchoolInfo, updateSchoolInfo, deleteSchoolInfo } from '@/services/dataManage/schoolListApi';
 
 export default {
   namespace: 'schoolList',
+
   state: {
+    // 查询关键字
+    isSearch: 0,
+
     // 列表数据
     data: {
       data: [],
@@ -19,9 +23,6 @@ export default {
       current: 1,
       showSizeChanger: true,
     },
-
-    // 查询关键字
-    isSearch: 0,
   },
 
   effects: {
@@ -57,6 +58,22 @@ export default {
 
       return response;
     },
+
+    // 新增
+    * addSchoolInfo({ payload }, { call, put }) {
+      const response = yield call(addSchoolInfo, payload);
+      return response
+    },
+
+    // 编辑
+    * updateSchoolInfo({ payload }, { call, put }) {
+      return yield call(updateSchoolInfo, payload);
+    },
+
+    // 删除
+    * deleteSchoolInfo({ payload }, { call, put }) {
+      return yield call(deleteSchoolInfo, payload);
+    }
   },
 
   reducers: {
@@ -90,6 +107,9 @@ export default {
     // 清除
     clearAll() {
       return {
+        // 查询关键字
+        isSearch: 0,
+
         // 列表数据
         data: {
           data: [],
@@ -105,9 +125,6 @@ export default {
           current: 1,
           showSizeChanger: true,
         },
-
-        // 查询关键字
-        isSearch: 0,
       };
     },
   },

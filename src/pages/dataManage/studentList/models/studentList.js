@@ -3,7 +3,11 @@ import { getStudentList } from '@/services/dataManage/studentListApi';
 
 export default {
   namespace: 'studentList',
+
   state: {
+    // 查询关键字
+    isSearch: 0,
+    
     // 列表数据
     data: {
       data: [],
@@ -19,9 +23,6 @@ export default {
       current: 1,
       showSizeChanger: true,
     },
-
-    // 查询关键字
-    isSearch: 0,
   },
 
   effects: {
@@ -98,6 +99,9 @@ export default {
     // 清除
     clearAll() {
       return {
+        // 查询关键字
+        isSearch: 0,
+
         // 列表数据
         data: {
           data: [],
@@ -113,9 +117,6 @@ export default {
           current: 1,
           showSizeChanger: true,
         },
-
-        // 查询关键字
-        isSearch: 0,
       };
     },
   },

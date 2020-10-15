@@ -6,16 +6,17 @@ import {
   searchContent,
   resetContent,
   onChangePage,
-  onChangePageSize,
+  onChangePageSize
 } from '@/utils/myUtils/commonUtils';
-import StandardTable from '@/components/StandardTable';
+import StandardTable from "@/components/StandardTable";
+import StudentListSearchForm from "@/pages/dataManage/studentList/sub/StudentListSearchForm";
 
 // 权限名称
 const listAuth = 'studentList';
 const opreAuth = {
-  add: 'studentList',
+  add: 'studentList_add',
   update: 'studentList_update',
-  delete: 'studentList_del',
+  delete: 'studentList_delete'
 };
 
 // 字段名称
@@ -35,10 +36,10 @@ const modelsName = 'studentList';
 
 const StudentList = (props) => {
   const {
-    studentList: { pagination, data, isSearch },
+    studentList: { isSearch, pagination, data },
     loading,
     dispatch,
-    exGlobal: { menuData },
+    exGlobal: { menuData }
   } = props;
 
   // 获取操作的权限
@@ -47,6 +48,8 @@ const StudentList = (props) => {
 
   // state
   // const [selectedRows, setSelectedRows] = useState([]);
+  const [addVisable, setAddVisable] = useState(false);
+  const [updateVisable, setUpdateVisable] = useState(false);
 
   // columns
   const columns = [
@@ -102,11 +105,20 @@ const StudentList = (props) => {
     },
   ];
 
+  // 新增
+  const handleAdd = (data) => {
+    setAddVisable(true);
+  }
+
   // 编辑
-  const handleUpdate = (data) => {};
+  const handleUpdate = (data) => { 
+    setUpdateVisable(true);
+  };
 
   // 删除
-  const handelDelete = (data) => {};
+  const handelDelete = (data) => { 
+    
+  };
 
   // 查询
   const handleSearch = (value) => {
@@ -198,6 +210,16 @@ const StudentList = (props) => {
 
   return (
     <React.Fragment>
+      <StudentListSearchForm
+        handleSearch={handleSearch}
+        handleFormReset={handleFormReset}
+      />
+
+      {
+        authDetail.add === true &&
+        <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学生</Button>
+      }
+
       <StandardTable
         rowKey="id"
         loading={loading}
@@ -218,5 +240,5 @@ const StudentList = (props) => {
 export default connect(({ studentList, loading, exGlobal }) => ({
   studentList,
   loading: loading.models.studentList,
-  exGlobal,
+  exGlobal
 }))(StudentList);
