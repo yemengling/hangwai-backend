@@ -34,8 +34,14 @@ export default defineConfig({
           name: 'login',
           path: '/user/login',
           component: './user/login',
+          redirect: '/user/myLogin'
         },
-      ],
+        {
+          name: 'myLogin',
+          path: '/user/myLogin',
+          component: './user/myLogin'
+        }
+      ]
     },
     {
       path: '/',
@@ -48,13 +54,13 @@ export default defineConfig({
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/welcome'
             },
             {
-              path: '/welcome',
-              name: '欢迎',
               icon: 'smile',
-              component: './Welcome',
+              name: '欢迎',
+              path: '/welcome',
+              component: './Welcome'
             },
             // {
             //   path: '/admin',
@@ -79,8 +85,8 @@ export default defineConfig({
             //   component: './ListTableList',
             // },
             {
-              name: '数据管理',
               icon: 'database',
+              name: '数据管理',
               path: '/dataManage',
               routes: [
                 {
@@ -92,6 +98,20 @@ export default defineConfig({
                   path: '/dataManage/schoolList',
                   name: '学校录入',
                   component: './dataManage/schoolList/SchoolList',
+                  operation: [
+                    {
+                      name: "新增",
+                      pageNameEn: "schoolList_add"
+                    },
+                    {
+                      name: "编辑",
+                      pageNameEn: "schoolList_update"
+                    },
+                    {
+                      name: "删除",
+                      pageNameEn: "schoolList_delete"
+                    }
+                  ]
                 },
                 {
                   path: '/dataManage/studentList',
@@ -101,8 +121,8 @@ export default defineConfig({
               ],
             },
             {
-              name: '系统设置',
               icon: 'setting',
+              name: '系统设置',
               path: '/systemManage',
               routes: [
                 {
