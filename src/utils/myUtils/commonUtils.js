@@ -1,3 +1,5 @@
+import { notification } from 'antd';
+
 // 判断code为成功
 export const codeResult = (res) => {
   try {
@@ -219,4 +221,34 @@ export const onChangePageSize = ({
   }
 
   method(params);
+};
+
+/**
+ * 刷新当前页
+ *
+ * @param isSearch  model中查询
+ * @param pagination  在modol中分页器
+ * @param method  getCurrentList方法
+ */
+export const updateCurrentPage = ({ isSearch, pagination, method }) => {
+  method({
+    ...isSearch,
+    pageIndex: pagination.current,
+    pageSize: pagination.currentPageSize,
+    totalCount: pagination.currentPageSize
+  });
+};
+
+/**
+ * 通知消息
+ * 
+ * @param type  success，info，warning，error
+ * @param title
+ * @param msg
+ */
+export const notifications = (type, title, msg) => {
+  notification[type]({
+    message: title,
+    description: msg
+  });
 };
