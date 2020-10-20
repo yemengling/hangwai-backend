@@ -1,8 +1,8 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getSchoolList, addSchoolInfo, updateSchoolInfo, deleteSchoolInfo } from '@/services/dataManage/schoolListApi';
+import { getScoreDetail } from '@/services/dataManage/scoreDetailApi';
 
 export default {
-  namespace: 'schoolList',
+  namespace: 'scoreDetail',
 
   state: {
     // 查询关键字
@@ -27,7 +27,7 @@ export default {
 
   effects: {
     // 获取列表
-    *getSchoolList({ payload }, { call, put }) {
+    *getScoreDetail({ payload }, { call, put }) {
       // const response = yield call(getSchoolList, payload);
 
       const response = {
@@ -35,14 +35,18 @@ export default {
         data: {
           list: [
             {
-              id: '1',
-              city: '城区1',
-              school: '学校1',
+              paper: '试卷1',
+              part1: '10',
+              part2: '20',
+              part3: '30',
+              part4: '40',
             },
             {
-              id: '2',
-              city: '城区2',
-              school: '学校2',
+              paper: '试卷2',
+              part1: '15',
+              part2: '25',
+              part3: '35',
+              part4: '45',
             },
           ],
           total: 2,
@@ -58,22 +62,6 @@ export default {
 
       return response;
     },
-
-    // 新增
-    * addSchoolInfo({ payload }, { call, put }) {
-      const response = yield call(addSchoolInfo, payload);
-      return response
-    },
-
-    // 编辑
-    * updateSchoolInfo({ payload }, { call, put }) {
-      return yield call(updateSchoolInfo, payload);
-    },
-
-    // 删除
-    * deleteSchoolInfo({ payload }, { call, put }) {
-      return yield call(deleteSchoolInfo, payload);
-    }
   },
 
   reducers: {

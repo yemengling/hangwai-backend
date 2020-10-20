@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button } from 'antd';
+import { Button, Popconfirm, Divider } from 'antd';
 import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
 import {
+  codeResult,
+  notifications, 
   searchContent,
   resetContent,
   onChangePage,
@@ -10,10 +12,12 @@ import {
 } from '@/utils/myUtils/commonUtils';
 import StandardTable from "@/components/StandardTable";
 import StudentListSearchForm from "@/pages/dataManage/studentList/sub/StudentListSearchForm";
+import { Link } from 'umi';
 
 // 权限名称
 const listAuth = 'studentList';
 const opreAuth = {
+  look: 'studentList_look',
   add: 'studentList_add',
   update: 'studentList_update',
   delete: 'studentList_delete'
@@ -26,7 +30,7 @@ export const studentListFieldName = {
   name: '姓名',
   city: '城区',
   school: '学校',
-  scroe: '成绩',
+  scroe: '总成绩',
   isAdmit: '录取',
   operate: '操作',
 };
@@ -48,8 +52,8 @@ const StudentList = (props) => {
 
   // state
   // const [selectedRows, setSelectedRows] = useState([]);
-  const [addVisable, setAddVisable] = useState(false);
-  const [updateVisable, setUpdateVisable] = useState(false);
+  const [lookVisable, setLookVisable] = useState(false);
+  const [recordData, setRecordData] = useState({});
 
   // columns
   const columns = [
@@ -82,6 +86,13 @@ const StudentList = (props) => {
       title: studentListFieldName['scroe'],
       dataIndex: 'scroe',
       key: 'scroe',
+      render: (data, record) => (
+        <>
+          {record.scroe}
+          <Divider type="vertical" />
+          {authDetail.look === true || <Link to={`/dataManage/scoreDetail?id=${record.id}`}>查看详情</Link>}
+        </>
+      )
     },
     {
       title: studentListFieldName['isAdmit'],
@@ -92,11 +103,12 @@ const StudentList = (props) => {
       title: studentListFieldName['operate'],
       dataIndex: 'operate',
       key: 'operate',
-      render: (rec) => (
+      render: (data, record) => (
         <>
-          {authDetail.update === true && <a onClick={() => handleUpdate(rec)}>编辑</a>}
-          {authDetail.delete === true && (
-            <Popconfirm title="确认删除?" onConfirm={() => this.handleDelete(rec)}>
+          {authDetail.update === true || <a onClick={() => handleUpdate(data)}>编辑</a>}
+          {authDetail.update === true || authDetail.delete === true || <Divider type="vertical" />}
+          {authDetail.delete === true || (
+            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
               <a>删除</a>
             </Popconfirm>
           )}
@@ -105,20 +117,34 @@ const StudentList = (props) => {
     },
   ];
 
-  // 新增
-  const handleAdd = (data) => {
-    setAddVisable(true);
-  }
-
-  // 编辑
-  const handleUpdate = (data) => { 
-    setUpdateVisable(true);
-  };
 
   // 删除
-  const handelDelete = (data) => { 
-    
+  const handleDelete = (id) => { 
+    const { dispatch } = props;
+    const submitData = {
+      id
+    }
+
+    dispatch({
+      type: `${modelsName}/deleteStudentInfo`,
+      payload: submitData
+    }).then((res) => {
+      if (codeResult(res)) {
+        // 成功
+        notifications('success', '操作成功', '');
+
+        updateCurrentPage({ 
+          isSearch, 
+          pagination,   
+          method: getCurrentList 
+        });
+      } else {
+        // 失败
+        notifications('error', '系统提示', res.message);
+      }
+    });
   };
+
 
   // 查询
   const handleSearch = (value) => {
@@ -131,7 +157,7 @@ const StudentList = (props) => {
       saveIsSearchStr,
       savePaginationStr,
       dispatch,
-      method: getCurrentList,
+      method: getCurrentList
     });
   };
 
@@ -145,9 +171,10 @@ const StudentList = (props) => {
       saveIsSearchStr,
       savePaginationStr,
       dispatch,
-      method: getCurrentList,
+      method: getCurrentList
     });
   };
+
 
   // 分页页码
   const onChang = (pageNumber) => {
@@ -158,7 +185,7 @@ const StudentList = (props) => {
       pagination,
       paginationMethodStr,
       dispatch,
-      method: getCurrentList,
+      method: getCurrentList
     });
   };
 
@@ -171,7 +198,7 @@ const StudentList = (props) => {
       pagination,
       paginationMethodStr: `${modelsName}/savePagination`,
       dispatch,
-      method: getCurrentList,
+      method: getCurrentList
     });
   };
 
@@ -180,8 +207,8 @@ const StudentList = (props) => {
     dispatch({
       type: `${modelsName}/getStudentList`,
       payload: {
-        ...params,
-      },
+        ...params
+      }
     }).then((res) => {
       console.log('res___', res);
     });
@@ -190,21 +217,21 @@ const StudentList = (props) => {
   // didMount
   useEffect(() => {
     dispatch({
-      type: `${modelsName}/clearAll`,
+      type: `${modelsName}/clearAll`
     });
 
     getCurrentList({
       pageIndex: 1,
       pageSize: pagination.currentPageSize,
-      totalCount: pagination.currentPageSize,
+      totalCount: pagination.currentPageSize
     });
 
     dispatch({
       type: `${modelsName}/savePagination`,
       payload: {
         ...pagination,
-        current: 1,
-      },
+        current: 1
+      }
     });
   }, []);
 
@@ -216,7 +243,7 @@ const StudentList = (props) => {
       />
 
       {
-        authDetail.add === true &&
+        authDetail.add === true ||
         <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学生</Button>
       }
 

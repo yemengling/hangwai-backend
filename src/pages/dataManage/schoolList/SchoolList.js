@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Divider } from 'antd';
 import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
 import { 
@@ -70,11 +70,12 @@ const SchoolList = (props) => {
     {
       title: schoolListFieldName['operate'],
       key: 'operate',
-      render: (rec) => (
+      render: (data, record) => (
         <>
-          {authDetail.update === true && <a onClick={() => handleUpdate(rec)}>编辑</a>}
-          {authDetail.delete === true && (
-            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(rec.id)}>
+          {authDetail.update === true || <a onClick={() => handleUpdate(data)}>编辑</a>}
+          {authDetail.update === true || authDetail.delete === true || <Divider type="vertical" />}
+          {authDetail.delete === true || (
+            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
               <a>删除</a>
             </Popconfirm>
           )}
@@ -242,7 +243,7 @@ const SchoolList = (props) => {
   return (
     <React.Fragment>
       {
-        authDetail.add === true &&
+        authDetail.add === true ||
         <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
       }
 

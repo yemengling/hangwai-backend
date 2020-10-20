@@ -2,14 +2,14 @@ import React from 'react';
 import { Form } from 'antd';
 import { connect } from 'dva';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
-import ShowModals from "@/components/Modals";
+import MyModal from "@/components/MyModal";
 
 const config = {
     labelCol: 7,
     wrapperCol: 16
 };
 
-const AddStudentListView = (props) => {
+const AddSchoolListView = (props) => {
     const { modalVisible, title, dispatch, okHandle, onCancel } = props;
     const [form] = Form.useForm();
 
@@ -39,7 +39,7 @@ const AddStudentListView = (props) => {
     ];
 
     return (
-        <ShowModals
+        <MyModal
             config={config && config}
             form={form}
             modalVisible={modalVisible && modalVisible}
@@ -54,4 +54,4 @@ const AddStudentListView = (props) => {
 export default connect(({ loading, exGlobal }) => ({
     loading: loading.models.exGlobal,
     exGlobal
-}))(AddStudentListView);
+}))(AddSchoolListView);

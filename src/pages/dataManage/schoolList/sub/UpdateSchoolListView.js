@@ -2,17 +2,17 @@ import React from 'react';
 import { Form } from 'antd';
 import { connect } from 'dva';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
-import ShowModals from "@/components/Modals";
+import MyModal from "@/components/MyModal";
 
 const config = {
     labelCol: 7,
     wrapperCol: 16
 };
 
-const UpdateStudentListView = (props) => {
+const UpdateSchoolListView = (props) => {
     const { modalVisible, title, recordData, dispatch, okHandle, onCancel } = props;
     const [form] = Form.useForm();
-
+    
     const element = [
         {
             eleName: 'Input',
@@ -41,7 +41,7 @@ const UpdateStudentListView = (props) => {
     ];
 
     return (
-        <ShowModals
+        <MyModal
             config={config && config}
             form={form}
             modalVisible={modalVisible && modalVisible}
@@ -56,4 +56,4 @@ const UpdateStudentListView = (props) => {
 export default connect(({ loading, exGlobal }) => ({
     loading: loading.models.exGlobal,
     exGlobal
-}))(UpdateStudentListView);
+}))(UpdateSchoolListView);

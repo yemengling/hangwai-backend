@@ -1,5 +1,5 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getStudentList } from '@/services/dataManage/studentListApi';
+import { getStudentList, deleteStudentInfo } from '@/services/dataManage/studentListApi';
 
 export default {
   namespace: 'studentList',
@@ -66,6 +66,11 @@ export default {
 
       return response;
     },
+
+    // 删除
+    * deleteStudentInfo({ payload }, { call, put }) {
+      return yield call(deleteStudentInfo, payload);
+    }
   },
 
   reducers: {
