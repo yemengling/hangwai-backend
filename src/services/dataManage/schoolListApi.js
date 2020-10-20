@@ -16,7 +16,7 @@ export const getSchoolList = (params) => {
 export const addSchoolInfo = (params) => {
   return request('/add', {
     method: "POST",
-    body: params
+    data: params
   })
 };
 
@@ -24,7 +24,7 @@ export const addSchoolInfo = (params) => {
 export const updateSchoolInfo = (params) => {
   return request('/update', {
     method: "POST",
-    body: params
+    data: params
   })
 };
 
@@ -32,6 +32,6 @@ export const updateSchoolInfo = (params) => {
 export const deleteSchoolInfo = (params) => {
   return request('/delete', {
     method: "POST",
-    body: params
+    data: params
   })
 };

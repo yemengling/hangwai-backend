@@ -5,17 +5,9 @@ import request from '@/utils/request';
 export const getStudentList = (params) => {
   let url = `/?`;
 
-  const valueArr = ['year', 'city', 'school', 'pageSize', 'pageIndex'];
+  const valueArr = ['pageSize', 'pageIndex'];
 
   url = buildUrl({ url, valueArr, value: params });
 
   return request(url);
-};
-
-// 删除
-export const deleteStudentInfo = (params) => {
-  return request('/delete', {
-    method: "POST",
-    data: params
-  })
 };
