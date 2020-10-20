@@ -118,6 +118,12 @@ export default defineConfig({
                   name: '学生录入',
                   component: './dataManage/studentList/StudentList',
                 },
+                {
+                  path: '/dataManage/scoreDetail',
+                  name: '成绩详情',
+                  component: './dataManage/scoreDetail/ScoreDetail',
+                  hideInMenu: true,
+                }
               ],
             },
             {
