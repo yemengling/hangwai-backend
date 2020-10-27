@@ -44,7 +44,7 @@ class MyModal extends Component {
                         name,
                         comFun: getInput({
                             placeholder: item.placeholder,
-                            defaultValue: item.initialValue
+                            initialValue: item.initialValue
                         }),
                         _props: { ...item }
                     })
@@ -69,7 +69,7 @@ class MyModal extends Component {
     }
 
     render() {
-        const { config, form, modalVisible, title, onCancel } = this.props;
+        const { form, modalVisible, title, onCancel } = this.props;
 
         return (
             <Modal
@@ -77,9 +77,8 @@ class MyModal extends Component {
                 title={title}
                 onOk={this.okHandle}
                 onCancel={() => onCancel()}
-                {...config}
             >
-                <Form form={form} onFinish={this.handleSearch}>
+                <Form form={form}>
                     {this.selectElement()}
                 </Form>
             </Modal>
