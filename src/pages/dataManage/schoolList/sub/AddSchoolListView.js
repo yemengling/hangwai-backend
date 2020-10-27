@@ -4,11 +4,6 @@ import { connect } from 'dva';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
 import MyModal from "@/components/MyModal";
 
-const config = {
-    labelCol: 7,
-    wrapperCol: 16
-};
-
 const AddSchoolListView = (props) => {
     const { modalVisible, title, dispatch, okHandle, onCancel } = props;
     const [form] = Form.useForm();
@@ -40,7 +35,6 @@ const AddSchoolListView = (props) => {
 
     return (
         <MyModal
-            config={config && config}
             form={form}
             modalVisible={modalVisible && modalVisible}
             title={title && title}

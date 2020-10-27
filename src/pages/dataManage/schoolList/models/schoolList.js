@@ -27,7 +27,7 @@ export default {
 
   effects: {
     // 获取列表
-    *getSchoolList({ payload }, { call, put }) {
+    * getSchoolList({ payload }, { call, put }) {
       // const response = yield call(getSchoolList, payload);
 
       const response = {

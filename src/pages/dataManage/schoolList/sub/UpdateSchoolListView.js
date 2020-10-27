@@ -4,11 +4,6 @@ import { connect } from 'dva';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
 import MyModal from "@/components/MyModal";
 
-const config = {
-    labelCol: 7,
-    wrapperCol: 16
-};
-
 const UpdateSchoolListView = (props) => {
     const { modalVisible, title, recordData, dispatch, okHandle, onCancel } = props;
     const [form] = Form.useForm();
@@ -42,7 +37,6 @@ const UpdateSchoolListView = (props) => {
 
     return (
         <MyModal
-            config={config && config}
             form={form}
             modalVisible={modalVisible && modalVisible}
             title={title && title}

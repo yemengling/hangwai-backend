@@ -12,7 +12,7 @@ import {
 } from '@/utils/myUtils/commonUtils';
 import StandardTable from "@/components/StandardTable";
 import StudentListSearchForm from "@/pages/dataManage/studentList/sub/StudentListSearchForm";
-import { Link } from 'umi';
+import { history, Link } from 'umi';
 
 // 权限名称
 const listAuth = 'studentList';
@@ -26,8 +26,8 @@ const opreAuth = {
 // 字段名称
 export const studentListFieldName = {
   id: 'ID',
-  year: '年份',
   name: '姓名',
+  date: '年月',
   city: '城区',
   school: '学校',
   scroe: '总成绩',
@@ -63,14 +63,14 @@ const StudentList = (props) => {
       key: 'id',
     },
     {
-      title: studentListFieldName['year'],
-      dataIndex: 'year',
-      key: 'year',
-    },
-    {
       title: studentListFieldName['name'],
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: studentListFieldName['date'],
+      dataIndex: 'date',
+      key: 'date',
     },
     {
       title: studentListFieldName['city'],
@@ -105,7 +105,7 @@ const StudentList = (props) => {
       key: 'operate',
       render: (data, record) => (
         <>
-          {authDetail.update === true || <a onClick={() => handleUpdate(data)}>编辑</a>}
+          {authDetail.update === true || <Link to={`/dataManage/updateStudent?id=${record.id}`}>编辑</Link>}
           {authDetail.update === true || authDetail.delete === true || <Divider type="vertical" />}
           {authDetail.delete === true || (
             <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
@@ -117,6 +117,11 @@ const StudentList = (props) => {
     },
   ];
 
+
+  // 新增
+  const handleAdd = () => {
+    history.push('/dataManage/addStudent');
+  }
 
   // 删除
   const handleDelete = (id) => { 

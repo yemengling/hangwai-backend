@@ -27,7 +27,7 @@ export default {
 
   effects: {
     // 获取列表
-    *getStudentList({ payload }, { call, put }) {
+    * getStudentList({ payload }, { call, put }) {
       // const response = yield call(getStudentList, payload);
 
       const response = {
@@ -36,8 +36,8 @@ export default {
           list: [
             {
               id: '1',
-              year: '2001',
               name: '姓名1',
+              date: '2001-02',
               city: '城区1',
               school: '学校1',
               scroe: '100',
@@ -45,8 +45,8 @@ export default {
             },
             {
               id: '2',
-              year: '2002',
               name: '姓名2',
+              date: '2002-02',  
               city: '城区2',
               school: '学校2',
               scroe: '102',

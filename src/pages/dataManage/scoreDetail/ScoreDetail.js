@@ -4,11 +4,12 @@ import {
     onChangePage,
     onChangePageSize
 } from '@/utils/myUtils/commonUtils';
-import StandardTable from '@/components/StandardTable';
 import { useLocation } from "umi";
+import StandardTable from '@/components/StandardTable';
 
 // 字段名称
 export const scoreDetailFieldName = {
+    id: 'ID',
     paper: '试卷名',
     part1: '第一部分',
     part2: '第二部分',
@@ -31,6 +32,11 @@ const ScoreDetail = (props) => {
 
     // columns
     const columns = [
+        {
+            title: scoreDetailFieldName['id'],
+            dataIndex: 'id',
+            key: 'id',
+        },
         {
             title: scoreDetailFieldName['paper'],
             dataIndex: 'paper',
@@ -122,7 +128,7 @@ const ScoreDetail = (props) => {
     return (
         <React.Fragment>
             <StandardTable
-                rowKey="paper"
+                rowKey="id"
                 loading={loading}
                 columns={columns}
                 dataSource={data && data.data}

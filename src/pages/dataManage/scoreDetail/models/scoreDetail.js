@@ -27,7 +27,7 @@ export default {
 
   effects: {
     // 获取列表
-    *getScoreDetail({ payload }, { call, put }) {
+    * getScoreDetail({ payload }, { call, put }) {
       // const response = yield call(getSchoolList, payload);
 
       const response = {
@@ -35,6 +35,7 @@ export default {
         data: {
           list: [
             {
+              id: 1,
               paper: '试卷1',
               part1: '10',
               part2: '20',
@@ -42,6 +43,7 @@ export default {
               part4: '40',
             },
             {
+              id: 2,
               paper: '试卷2',
               part1: '15',
               part2: '25',

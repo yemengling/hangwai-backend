@@ -10,7 +10,7 @@ const StudentListSearchForm = (props) => {
     const element = [
         {
             eleName: 'DatePicker',
-            title: studentListFieldName['year'],
+            title: '年份',
             name: 'year',
             picker: 'year'
         },
