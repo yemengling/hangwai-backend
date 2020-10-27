@@ -119,11 +119,22 @@ export default defineConfig({
                   component: './dataManage/studentList/StudentList',
                 },
                 {
+                  path: '/dataManage/addStudent',
+                  name: '新增学生',
+                  component: './dataManage/addStudent/AddStudent',
+                },
+                {
+                  path: '/dataManage/updateStudent',
+                  name: '编辑学生',
+                  component: './dataManage/updateStudent/UpdateStudent',
+                  hideInMenu: true,
+                },
+                {
                   path: '/dataManage/scoreDetail',
                   name: '成绩详情',
                   component: './dataManage/scoreDetail/ScoreDetail',
                   hideInMenu: true,
-                }
+                },
               ],
             },
             {
