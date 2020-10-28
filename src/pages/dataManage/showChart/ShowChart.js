@@ -11,7 +11,7 @@ const modelsName = 'showChart';
 const ShowChart = (props) => {
     const { TabPane } = Tabs;
     const {
-        showChart: { },
+        showChart: {},
         loading,
         dispatch
     } = props;
