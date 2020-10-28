@@ -44,9 +44,7 @@ const AddStudent = (props) => {
             }
         }
     }
-
-    console.log(cityList)
-
+    
     // element
     const element = [
         {
@@ -125,7 +123,7 @@ const AddStudent = (props) => {
                     ]
                 }
             ]
-        },
+        }
     ];
 
     // extraDom
@@ -226,7 +224,7 @@ const AddStudent = (props) => {
         dispatch({
             type: 'exGlobal/getSchoolList'
         });
-    })
+    }, []);
 
     return (
         <React.Fragment>

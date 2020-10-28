@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form } from 'antd';
-import { connect } from 'dva';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
 import MyModal from "@/components/MyModal";
 
@@ -47,7 +46,4 @@ const UpdateSchoolListView = (props) => {
     )
 };
 
-export default connect(({ loading, exGlobal }) => ({
-    loading: loading.models.exGlobal,
-    exGlobal
-}))(UpdateSchoolListView);
+export default UpdateSchoolListView;
