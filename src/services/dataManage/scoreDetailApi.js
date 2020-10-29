@@ -5,7 +5,7 @@ import request from '@/utils/request';
 export const getStudentList = (params) => {
   let url = `/?`;
 
-  const valueArr = ['pageSize', 'pageIndex'];
+  const valueArr = ['id', 'pageSize', 'pageIndex'];
 
   url = buildUrl({ url, valueArr, value: params });
 
