@@ -17,7 +17,6 @@ import { history, Link } from 'umi';
 // 权限名称
 const listAuth = 'studentList';
 const opreAuth = {
-  look: 'studentList_look',
   add: 'studentList_add',
   update: 'studentList_update',
   delete: 'studentList_delete'
@@ -90,7 +89,7 @@ const StudentList = (props) => {
         <>
           {record.scroe}
           <Divider type="vertical" />
-          {authDetail.look === true || <Link to={`/dataManage/scoreDetail?id=${record.id}`}>查看详情</Link>}
+          {<Link to={`/dataManage/scoreDetail?id=${record.id}`}>查看详情</Link>}
         </>
       )
     },
@@ -105,9 +104,9 @@ const StudentList = (props) => {
       key: 'operate',
       render: (data, record) => (
         <>
-          {authDetail.update === true || <Link to={`/dataManage/updateStudent?id=${record.id}`}>编辑</Link>}
-          {authDetail.update === true || authDetail.delete === true || <Divider type="vertical" />}
-          {authDetail.delete === true || (
+          {authDetail.update === true && <Link to={`/dataManage/updateStudent?id=${record.id}`}>编辑</Link>}
+          {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
+          {authDetail.delete === true && (
             <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
               <a>删除</a>
             </Popconfirm>
@@ -248,7 +247,7 @@ const StudentList = (props) => {
       />
 
       {
-        authDetail.add === true ||
+        authDetail.add === true &&
         <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学生</Button>
       }
 

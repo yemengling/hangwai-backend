@@ -18,6 +18,7 @@ export default {
                 code: 0,
                 data: {
                     isAdmit: 1,
+                    sex: 1,
                     name: '姓名1',
                     date: '2020-02',
                     city: '城区1',

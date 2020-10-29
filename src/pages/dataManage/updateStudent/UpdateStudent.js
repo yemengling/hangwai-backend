@@ -11,10 +11,11 @@ import FormList from '@/components/FormList';
 
 // 字段名称
 export const updateStudentFieldName = {
+    isAdmit: '录取',
+    sex: '性别',
     name: '姓名',
     date: '年月',
-    info: '信息',
-    isAdmit: '录取'
+    info: '信息'
 };
 
 // modelsname
@@ -62,8 +63,29 @@ const UpdateStudent = (props) => {
                     text: '是'
                 },
                 {
-                    id: 2,
+                    id: -1,
                     text: '否'
+                }
+            ],
+            rules: [
+                {
+                    required: true
+                }
+            ]
+        },
+        {
+            eleName: 'Radio',
+            title: updateStudentFieldName['sex'],
+            name: 'sex',
+            spanNum: 24,
+            dataRadio: [
+                {
+                    id: 1,
+                    text: '男'
+                },
+                {
+                    id: 2,
+                    text: '女'
                 }
             ],
             rules: [

@@ -18,7 +18,7 @@ const listAuth = 'schoolList';
 const opreAuth = {
   add: 'schoolList_add',
   update: 'schoolList_update',
-  delete: 'schoolList_delelte'
+  delete: 'schoolList_delete'
 };
 
 // 字段名称
@@ -72,9 +72,9 @@ const SchoolList = (props) => {
       key: 'operate',
       render: (data, record) => (
         <>
-          {authDetail.update === true || <a onClick={() => handleUpdate(data)}>编辑</a>}
-          {authDetail.update === true || authDetail.delete === true || <Divider type="vertical" />}
-          {authDetail.delete === true || (
+          {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
+          {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
+          {authDetail.delete === true && (
             <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
               <a>删除</a>
             </Popconfirm>
@@ -243,7 +243,7 @@ const SchoolList = (props) => {
   return (
     <React.Fragment>
       {
-        authDetail.add === true ||
+        authDetail.add === true &&
         <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
       }
 
