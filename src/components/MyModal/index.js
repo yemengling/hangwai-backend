@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Form, Col, Row, Button } from 'antd';
-import { getInput } from './element';
+import { getInput, getCheckboxGroup, getSelect } from './element';
 import styles from './index.less';
 
 class MyModal extends Component {
@@ -43,6 +43,33 @@ class MyModal extends Component {
                         title,
                         name,
                         comFun: getInput({
+                            placeholder: item.placeholder,
+                            initialValue: item.initialValue
+                        }),
+                        _props: { ...item }
+                    })
+                }
+
+                if(eleName === 'CheckboxGroup'){
+                    rowEle = this.formCol({
+                        key,
+                        title,
+                        name,
+                        comFun: getCheckboxGroup({
+                            dataCheck: item.dataCheck,
+                            initialValue: item.initialValue
+                        }),
+                        _props: { ...item }
+                    })
+                }
+
+                if(eleName === 'Select'){
+                    rowEle = this.formCol({
+                        key,
+                        title,
+                        name,
+                        comFun: getSelect({
+                            dataSelect: item.dataSelect,
                             placeholder: item.placeholder,
                             initialValue: item.initialValue
                         }),
