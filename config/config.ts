@@ -98,20 +98,6 @@ export default defineConfig({
                   path: '/dataManage/schoolList',
                   name: '学校录入',
                   component: './dataManage/schoolList/SchoolList',
-                  operation: [
-                    {
-                      name: "新增",
-                      pageNameEn: "schoolList_add"
-                    },
-                    {
-                      name: "编辑",
-                      pageNameEn: "schoolList_update"
-                    },
-                    {
-                      name: "删除",
-                      pageNameEn: "schoolList_delete"
-                    }
-                  ]
                 },
                 {
                   path: '/dataManage/studentList',
@@ -122,6 +108,7 @@ export default defineConfig({
                   path: '/dataManage/addStudent',
                   name: '新增学生',
                   component: './dataManage/addStudent/AddStudent',
+                  hideInMenu: true,
                 },
                 {
                   path: '/dataManage/updateStudent',
@@ -143,9 +130,14 @@ export default defineConfig({
               path: '/systemManage',
               routes: [
                 {
-                  path: '/systemManage/setRole',
-                  name: '用户权限',
-                  component: './systemManage/setRole/SetRole',
+                  path: '/systemManage/roleList',
+                  name: '角色列表',
+                  component: './systemManage/roleList/RoleList',
+                },
+                {
+                  path: '/systemManage/accountList',
+                  name: '账户列表',
+                  component: './systemManage/accountList/AccountList',
                 },
               ],
             },
