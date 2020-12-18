@@ -7,7 +7,7 @@ class MyModal extends Component {
     constructor(props) {
         super(props);
     }
-
+    
     // 确定
     okHandle = () => {
         const { form, okHandle } = this.props;
@@ -96,7 +96,7 @@ class MyModal extends Component {
     }
 
     render() {
-        const { form, modalVisible, title, onCancel } = this.props;
+        const { modalVisible, title, onCancel, form } = this.props;
 
         return (
             <Modal

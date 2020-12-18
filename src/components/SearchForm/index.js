@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Col, Row, Button } from 'antd';
-import { getDatePicker, getInput } from './element';
+import { getDatePicker, getRangePicker, getInput, getSelect } from './element';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import { formatRangeDate } from '@/utils/myUtils/timeUtils';
 import styles from './index.less';
 
 class SearchForm extends Component {
@@ -17,6 +18,7 @@ class SearchForm extends Component {
         const { form, handleSearch } = this.props;
 
         form.validateFields().then(values => {
+            formatRangeDate(values);
             handleSearch(values);
         }).catch(errorInfo => {
 
@@ -79,7 +81,21 @@ class SearchForm extends Component {
                             key,
                             title,
                             name,
-                            comFun: getDatePicker({ picker: item.picker }),
+                            comFun: getDatePicker({ 
+                                picker: item.picker 
+                            }),
+                            _props: { ...item }
+                        })
+                    }
+
+                    if(eleName === 'RangePicker'){
+                        return this.formCol({
+                            key,
+                            title,
+                            name,
+                            comFun: getRangePicker({ 
+                                picker: item.picker 
+                            }),
                             _props: { ...item }
                         })
                     }
@@ -89,7 +105,22 @@ class SearchForm extends Component {
                             key,
                             title,
                             name,
-                            comFun: getInput({ placeholder: item.placeholder }),
+                            comFun: getInput({ 
+                                placeholder: item.placeholder 
+                            }),
+                            _props: { ...item }
+                        })
+                    }
+
+                    if(eleName === 'Select'){
+                        return this.formCol({
+                            key,
+                            title,
+                            name,
+                            comFun: getSelect({ 
+                                dataSelect: item.dataSelect,
+                                placeholder: item.placeholder 
+                            }),
                             _props: { ...item }
                         })
                     }

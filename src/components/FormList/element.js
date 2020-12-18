@@ -1,6 +1,5 @@
 import { Form, Input, DatePicker, Select, Radio } from 'antd';
 const { Option } = Select;
-import moment from 'moment';
 
 // Input
 export const getInput = ({ placeholder }) => {

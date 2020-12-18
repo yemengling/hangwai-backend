@@ -1,4 +1,5 @@
 import { Row, Col, Input, Checkbox, Select } from 'antd';
+const { Option } = Select;
 
 // Input
 export const getInput = ({ placeholder, initialValue }) => {
