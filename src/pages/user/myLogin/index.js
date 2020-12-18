@@ -40,7 +40,7 @@ const MyLogin = (props) => {
         <div className={styles.myLogin}>
             <Form form={form} onFinish={handleSubmit}>
                 <Form.Item
-                    name="userName"
+                    name="account"
                     rules={[
                         {
                             required: true,
@@ -57,7 +57,7 @@ const MyLogin = (props) => {
                                 }}
                             />
                         }
-                        placeholder="用户名: admin or user"
+                        placeholder="用户名: "
                     />
                 </Form.Item>
 
@@ -79,7 +79,7 @@ const MyLogin = (props) => {
                                 }}
                             />
                         }
-                        placeholder="密码: ant.design"
+                        placeholder="密码: "
                     />
                 </Form.Item>
 
