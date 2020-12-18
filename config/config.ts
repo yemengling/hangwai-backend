@@ -95,6 +95,11 @@ export default defineConfig({
                   component: './dataManage/showChart/ShowChart',
                 },
                 {
+                  path: '/dataManage/cityList',
+                  name: '城区录入',
+                  component: './dataManage/cityList/CityList',
+                },
+                {
                   path: '/dataManage/schoolList',
                   name: '学校录入',
                   component: './dataManage/schoolList/SchoolList',
