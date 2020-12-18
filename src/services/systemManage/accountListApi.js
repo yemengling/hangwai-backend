@@ -3,7 +3,7 @@ import request from '@/utils/request';
 
 // 获取列表
 export const getAccountList = (params) => {
-    let url = `/read?`;
+    let url = `/api/base/user?`;
 
     const valueArr = ['pageSize', 'pageIndex'];
 
@@ -14,7 +14,7 @@ export const getAccountList = (params) => {
 
 // 新增
 export const addAccountInfo = (params) => {
-    return request('/add', {
+    return request('/api/base/user', {
         method: "POST",
         data: params
     })
@@ -22,16 +22,15 @@ export const addAccountInfo = (params) => {
 
 // 编辑
 export const updateAccountInfo = (params) => {
-    return request('/update', {
-        method: "POST",
+    return request('/api/base/user', {
+        method: "PUT",
         data: params
     })
 };
 
 // 删除
 export const deleteAccountInfo = (params) => {
-    return request('/delete', {
-        method: "POST",
-        data: params
+    return request(`/api/base/user/${params.userId}`, {
+        method: "DELETE"
     })
 };

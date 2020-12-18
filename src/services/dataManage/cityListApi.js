@@ -2,8 +2,8 @@ import { buildUrl } from '@/utils/myUtils/stringUtils.js';
 import request from '@/utils/request';
 
 // 获取列表
-export const getSchoolList = (params) => {
-  let url = `/api/school?`;
+export const getCityList = (params) => {
+  let url = `/api/city?`;
 
   const valueArr = ['pageSize', 'pageIndex'];
 
@@ -13,24 +13,24 @@ export const getSchoolList = (params) => {
 };
 
 // 新增
-export const addSchoolInfo = (params) => {
-  return request('/api/school', {
+export const addCityInfo = (params) => {
+  return request('/api/city', {
     method: "POST",
     data: params
   })
 };
 
 // 编辑
-export const updateSchoolInfo = (params) => {
-  return request('/api/school', {
+export const updateCityInfo = (params) => {
+  return request('/api/city', {
     method: "PUT",
     data: params
   })
 };
 
 // 删除
-export const deleteSchoolInfo = (params) => {
-  return request(`/api/school/${params.schoolId}`, {
+export const deleteCityInfo = (params) => {
+  return request(`/api/city/${params.cityId}`, {
     method: "DELETE"
   })
 };

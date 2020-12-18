@@ -14,7 +14,7 @@ export const getRoleList = (params) => {
 
 // 新增
 export const addRoleInfo = (params) => {
-    return request('/add', {
+    return request('/api/base/user/role', {
         method: "POST",
         data: params
     })
@@ -22,16 +22,15 @@ export const addRoleInfo = (params) => {
 
 // 编辑
 export const updateRoleInfo = (params) => {
-    return request('/update', {
-        method: "POST",
+    return request('/api/base/user/role', {
+        method: "PUT",
         data: params
     })
 };
 
 // 删除
 export const deleteRoleInfo = (params) => {
-    return request('/delete', {
-        method: "POST",
-        data: params
+    return request(`/base/user/role/${params.roleId}`, {
+        method: "DELETE"
     })
 };

@@ -3,7 +3,7 @@ import request from '@/utils/request';
 
 // 获取学生信息
 export const getStudentInfo = (params) => {
-    let url = `/read`;
+    let url = `/api/student?`;
 
     const valueArr = ['id'];
 
@@ -14,8 +14,8 @@ export const getStudentInfo = (params) => {
 
 // 编辑
 export const updateStudentInfo = (params) => {
-    return request('/update', {
-        method: "POST",
+    return request('/api/student', {
+        method: "PUT",
         data: params
     })
 };

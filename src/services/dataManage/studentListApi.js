@@ -3,9 +3,9 @@ import request from '@/utils/request';
 
 // 获取列表
 export const getStudentList = (params) => {
-  let url = `/?`;
+  let url = `/api/student?`;
 
-  const valueArr = ['year', 'city', 'school', 'pageSize', 'pageIndex'];
+  const valueArr = ['beginDate', 'endDate', 'cityId', 'schoolId', 'pageSize', 'pageIndex'];
 
   url = buildUrl({ url, valueArr, value: params });
 
@@ -14,8 +14,7 @@ export const getStudentList = (params) => {
 
 // 删除
 export const deleteStudentInfo = (params) => {
-  return request('/delete', {
-    method: "POST",
-    data: params
+  return request(`/api/student/${params.studentId}`, {
+    method: "DELETE"
   })
 };

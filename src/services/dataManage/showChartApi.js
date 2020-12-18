@@ -3,7 +3,7 @@ import request from '@/utils/request';
 
 // 获取饼状图
 export const getPieData = (params) => {
-    let url = `/readPie?`;
+    let url = `/api/bi/groupAdmit`;
 
     const valueArr = [];
 
@@ -14,7 +14,7 @@ export const getPieData = (params) => {
 
 // 获取柱状图
 export const getBarData = (params) => {
-    let url = `/readBar?`;
+    let url = `/api/bi/groupCity`;
 
     const valueArr = [];
 
@@ -26,7 +26,7 @@ export const getBarData = (params) => {
 
 // 获取折线图
 export const getTimelineData = (params) => {
-    let url = `/readTimeline?`;
+    let url = `/api/bi/groupSchool`;
 
     const valueArr = [];
 
