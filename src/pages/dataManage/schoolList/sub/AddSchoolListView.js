@@ -1,18 +1,18 @@
 import React from 'react';
-import { Form } from 'antd';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
+import { formatCity } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const AddSchoolListView = (props) => {
-    const { modalVisible, title, dispatch, okHandle, onCancel } = props;
-    const [form] = Form.useForm();
+    const { form, modalVisible, title, cityList, dispatch, okHandle, onCancel } = props;
 
     const element = [
         {
-            eleName: 'Input',
+            eleName: 'Select',
             title: schoolListFieldName['city'],
-            name: 'city',
+            name: 'cityId',
             spanNum: 24,
+            dataSelect: formatCity(cityList),
             rules: [
                 {
                     required: true
@@ -21,8 +21,8 @@ const AddSchoolListView = (props) => {
         },
         {
             eleName: 'Input',
-            title: schoolListFieldName['school'],
-            name: 'school',
+            title: schoolListFieldName['name'],
+            name: 'name',
             spanNum: 24,
             rules: [
                 {

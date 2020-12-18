@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'antd';
-import SearchForm from '@/components/SearchForm';
 import { studentListFieldName } from "@/pages/dataManage/studentList/StudentList";
+import { formatCity, formatSchool } from "@/utils/myUtils/renderUtils";
+import SearchForm from '@/components/SearchForm';
 
 const StudentListSearchForm = (props) => {
-    const { handleSearch, handleFormReset } = props;
+    const { cityList, schoolList, handleSearch, handleFormReset } = props;
     const [form] = Form.useForm();
 
     const element = [
         {
-            eleName: 'DatePicker',
+            eleName: 'RangePicker',
             title: '年份',
             name: 'year',
             picker: 'year'
         },
         {
-            eleName: 'Input',
+            eleName: 'Select',
             title: studentListFieldName['city'],
-            name: 'city'
+            name: 'cityId',
+            dataSelect: formatCity(cityList)
         },
         {
-            eleName: 'Input',
+            eleName: 'Select',
             title: studentListFieldName['school'],
-            name: 'school'
+            name: 'schoolId',
+            dataSelect: formatSchool(schoolList)
         }
     ];
 

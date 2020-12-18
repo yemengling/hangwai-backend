@@ -15,13 +15,19 @@ const AddRoleListView = (props) => {
             spanNum: 24
         },
         {
+            eleName: 'Input',
+            title: roleListFieldName['remark'],
+            name: 'remark',
+            spanNum: 24
+        },
+        {
             eleName: 'CheckboxGroup',
             title: '权限',
-            name: 'authority',
+            name: 'permissionList',
             spanNum: 24,
             dataCheck: [
                 {
-                    id: 'add',
+                    id: 'create',
                     text: '新增'
                 },
                 {

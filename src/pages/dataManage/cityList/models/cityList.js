@@ -1,8 +1,8 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getSchoolList, addSchoolInfo, updateSchoolInfo, deleteSchoolInfo } from '@/services/dataManage/schoolListApi';
+import { getCityList, addCityInfo, updateCityInfo, deleteCityInfo } from '@/services/dataManage/cityListApi';
 
 export default {
-  namespace: 'schoolList',
+  namespace: 'cityList',
 
   state: {
     // 查询关键字
@@ -27,8 +27,8 @@ export default {
 
   effects: {
     // 获取列表
-    * getSchoolList({ payload }, { call, put }) {
-      const response = yield call(getSchoolList, payload);
+    * getCityList({ payload }, { call, put }) {
+      const response = yield call(getCityList, payload);
 
       if (codeResult(response)) {
         yield put({
@@ -41,18 +41,18 @@ export default {
     },
 
     // 新增
-    * addSchoolInfo({ payload }, { call, put }) {
-      return yield call(addSchoolInfo, payload);
+    * addCityInfo({ payload }, { call, put }) {
+      return yield call(addCityInfo, payload);
     },
 
     // 编辑
-    * updateSchoolInfo({ payload }, { call, put }) {
-      return yield call(updateSchoolInfo, payload);
+    * updateCityInfo({ payload }, { call, put }) {
+      return yield call(updateCityInfo, payload);
     },
 
     // 删除
-    * deleteSchoolInfo({ payload }, { call, put }) {
-      return yield call(deleteSchoolInfo, payload);
+    * deleteCityInfo({ payload }, { call, put }) {
+      return yield call(deleteCityInfo, payload);
     }
   },
 

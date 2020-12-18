@@ -24,11 +24,12 @@ const opreAuth = {
 
 // 字段名称
 export const roleListFieldName = {
-    id: 'ID',
+    roleId: 'ID',
     name: '角色',
     isAdd: '新增',
     isUpdate: '编辑',
     isDelete: '删除',
+    remark: '备注',
     operate: '操作'
 };
 
@@ -56,9 +57,9 @@ const RoleList = (props) => {
     // columns
     const columns = [
         {
-            title: roleListFieldName['id'],
-            dataIndex: 'id',
-            key: 'id',
+            title: roleListFieldName['roleId'],
+            dataIndex: 'roleId',
+            key: 'roleId',
         },
         {
             title: roleListFieldName['name'],
@@ -96,6 +97,11 @@ const RoleList = (props) => {
             )
         },
         {
+            title: roleListFieldName['remark'],
+            dataIndex: 'remark',
+            key: 'remark',
+        },
+        {
             title: roleListFieldName['operate'],
             key: 'operate',
             render: (data, record) => (
@@ -103,7 +109,7 @@ const RoleList = (props) => {
                     {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
                     {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
                     {authDetail.delete === true && (
-                        <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
+                        <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.roleId)}>
                             <a>删除</a>
                         </Popconfirm>
                     )}
@@ -163,7 +169,7 @@ const RoleList = (props) => {
         const { dispatch } = props;
         const submitData = data;
 
-        submitData.id = recordData.id;
+        submitData.roleId = recordData.roleId;
 
         dispatch({
             type: `${modelsName}/updateRoleInfo`,
@@ -187,10 +193,10 @@ const RoleList = (props) => {
     };
 
     // 删除
-    const handleDelete = (id) => {
+    const handleDelete = (roleId) => {
         const { dispatch } = props;
         const submitData = {
-            id
+            roleId
         }
 
         dispatch({
@@ -200,6 +206,10 @@ const RoleList = (props) => {
             if (codeResult(res)) {
                 // 成功
                 notifications('success', '操作成功', '');
+
+                if (data.data.length == 1) {
+                    pagination.current = (pagination.current - 1) == 1 ? 1 : (pagination.current - 1);
+                }
 
                 updateCurrentPage({
                     isSearch,
@@ -288,8 +298,10 @@ const RoleList = (props) => {
                 <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增角色</Button>
             }
 
+            <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增角色</Button>
+
             <StandardTable
-                rowKey="id"
+                rowKey="roleId"
                 loading={loading}
                 columns={columns}
                 dataSource={data && data.data}

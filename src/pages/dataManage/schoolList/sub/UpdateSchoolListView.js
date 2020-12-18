@@ -1,19 +1,19 @@
 import React from 'react';
-import { Form } from 'antd';
 import { schoolListFieldName } from "@/pages/dataManage/schoolList/SchoolList";
+import { formatCity } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const UpdateSchoolListView = (props) => {
-    const { modalVisible, title, recordData, dispatch, okHandle, onCancel } = props;
-    const [form] = Form.useForm();
+    const { form, modalVisible, title, cityList, recordData, dispatch, okHandle, onCancel } = props;
     
     const element = [
         {
-            eleName: 'Input',
+            eleName: 'Select',
             title: schoolListFieldName['city'],
-            name: 'city',
-            initialValue: recordData.city,
+            name: 'cityId',
+            initialValue: recordData.cityId,
             spanNum: 24,
+            dataSelect: formatCity(cityList),
             rules: [
                 {
                     required: true
@@ -22,9 +22,9 @@ const UpdateSchoolListView = (props) => {
         },
         {
             eleName: 'Input',
-            title: schoolListFieldName['school'],
-            name: 'school',
-            initialValue: recordData.school,
+            title: schoolListFieldName['name'],
+            name: 'name',
+            initialValue: recordData.name,
             spanNum: 24,
             rules: [
                 {

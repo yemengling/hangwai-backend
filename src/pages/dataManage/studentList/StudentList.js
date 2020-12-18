@@ -4,9 +4,10 @@ import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
 import {
   codeResult,
-  notifications, 
+  notifications,
   searchContent,
   resetContent,
+  updateCurrentPage,
   onChangePage,
   onChangePageSize
 } from '@/utils/myUtils/commonUtils';
@@ -24,7 +25,7 @@ const opreAuth = {
 
 // 字段名称
 export const studentListFieldName = {
-  id: 'ID',
+  studentId: 'ID',
   name: '姓名',
   date: '年月',
   city: '城区',
@@ -42,7 +43,7 @@ const StudentList = (props) => {
     studentList: { isSearch, pagination, data },
     loading,
     dispatch,
-    exGlobal: { menuData }
+    exGlobal: { menuData, cityList, schoolList }
   } = props;
 
   // 获取操作的权限
@@ -57,9 +58,9 @@ const StudentList = (props) => {
   // columns
   const columns = [
     {
-      title: studentListFieldName['id'],
-      dataIndex: 'id',
-      key: 'id',
+      title: studentListFieldName['studentId'],
+      dataIndex: 'studentId',
+      key: 'studentId',
     },
     {
       title: studentListFieldName['name'],
@@ -89,7 +90,7 @@ const StudentList = (props) => {
         <>
           {record.scroe}
           <Divider type="vertical" />
-          {<Link to={`/dataManage/scoreDetail?id=${record.id}`}>查看详情</Link>}
+          {<Link to={`/dataManage/scoreDetail?id=${record.studentId}`}>查看详情</Link>}
         </>
       )
     },
@@ -97,6 +98,11 @@ const StudentList = (props) => {
       title: studentListFieldName['isAdmit'],
       dataIndex: 'isAdmit',
       key: 'isAdmit',
+      render: (data, record) => (
+        <>
+          {record.isAdmit ? '是' : '否'}
+        </>
+      )
     },
     {
       title: studentListFieldName['operate'],
@@ -104,13 +110,19 @@ const StudentList = (props) => {
       key: 'operate',
       render: (data, record) => (
         <>
-          {authDetail.update === true && <Link to={`/dataManage/updateStudent?id=${record.id}`}>编辑</Link>}
+          {authDetail.update === true && <Link to={`/dataManage/updateStudent?id=${record.studentId}`}>编辑</Link>}
           {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
           {authDetail.delete === true && (
-            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
+            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.studentId)}>
               <a>删除</a>
             </Popconfirm>
           )}
+
+          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.studentId)}>
+            <a>删除</a>
+          </Popconfirm>
+
+          <Link to={`/dataManage/updateStudent?id=${record.studentId}`}>编辑</Link>
         </>
       ),
     },
@@ -123,10 +135,10 @@ const StudentList = (props) => {
   }
 
   // 删除
-  const handleDelete = (id) => { 
+  const handleDelete = (studentId) => {
     const { dispatch } = props;
     const submitData = {
-      id
+      studentId
     }
 
     dispatch({
@@ -137,10 +149,14 @@ const StudentList = (props) => {
         // 成功
         notifications('success', '操作成功', '');
 
-        updateCurrentPage({ 
-          isSearch, 
-          pagination,   
-          method: getCurrentList 
+        if (data.data.length == 1) {
+          pagination.current = (pagination.current - 1) == 1 ? 1 : (pagination.current - 1);
+        }
+
+        updateCurrentPage({
+          isSearch,
+          pagination,
+          method: getCurrentList
         });
       } else {
         // 失败
@@ -237,11 +253,23 @@ const StudentList = (props) => {
         current: 1
       }
     });
+
+    // 获取城区列表
+    dispatch({
+      type: 'exGlobal/getCityList'
+    });
+
+    // 获取学校列表
+    dispatch({
+      type: 'exGlobal/getSchoolList'
+    });
   }, []);
 
   return (
     <React.Fragment>
       <StudentListSearchForm
+        cityList={cityList}
+        schoolList={schoolList}
         handleSearch={handleSearch}
         handleFormReset={handleFormReset}
       />
@@ -252,7 +280,7 @@ const StudentList = (props) => {
       }
 
       <StandardTable
-        rowKey="id"
+        rowKey="studentId"
         loading={loading}
         columns={columns}
         dataSource={data && data.data}

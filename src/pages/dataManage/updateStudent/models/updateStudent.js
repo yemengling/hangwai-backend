@@ -14,33 +14,22 @@ export default {
     effects: {
         // 获取列表
         * getStudentInfo({ payload }, { call, put }) {
-            let response = {
-                code: 0,
-                data: {
-                    isAdmit: 1,
-                    sex: 1,
-                    name: '姓名1',
-                    date: '2020-02',
-                    city: '城区1',
-                    school: '学校1',
-                    papers: [
-                        {
-                            'name': '试卷1',
-                            'first': '10',
-                            'second': '20',
-                            'third': '30',
-                            'fourth': '40'
-                        }
-                    ]
-                }
+            const response = yield call(getStudentInfo, payload);
+            const studentInfo = response.r.list[0];
+            const formVal = {
+                isAdmit: studentInfo.isAdmit,
+                sex: studentInfo.sex,
+                name: studentInfo.name,
+                date: moment(studentInfo.date, 'YY-MM'),
+                cityId: studentInfo.cityId,
+                schoolId: studentInfo.schoolId,
+                papers: studentInfo.papers
             };
-
-            response.data.date = moment('2020-02', 'YY-MM');
 
             if (codeResult(response)) {
                 yield put({
                     type: 'save',
-                    payload: response.data,
+                    payload: formVal,
                 });
             }
 

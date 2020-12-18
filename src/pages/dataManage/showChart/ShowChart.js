@@ -37,7 +37,7 @@ const ShowChart = (props) => {
         dispatch({
             type: `${modelsName}/getPieData`
         }).then((res) => {
-            setPieData(res.data);
+            setPieData(res.r);
             console.log('res___', res);
         });
     };
@@ -47,7 +47,7 @@ const ShowChart = (props) => {
         dispatch({
             type: `${modelsName}/getBarData`
         }).then((res) => {
-            setBarData(res.data);
+            setBarData(res.r);
             console.log('res___', res);
         });
     };
@@ -57,7 +57,7 @@ const ShowChart = (props) => {
         dispatch({
             type: `${modelsName}/getTimelineData`
         }).then((res) => {
-            setTimelineData(res.data);
+            setTimelineData(res.r);
             console.log('res___', res);
         });
     };

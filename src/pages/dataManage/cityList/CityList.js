@@ -10,34 +10,33 @@ import {
   onChangePageSize
 } from '@/utils/myUtils/commonUtils';
 import StandardTable from '@/components/StandardTable';
-import AddSchoolListView from "@/pages/dataManage/schoolList/sub/AddSchoolListView";
-import UpdateSchoolListView from "@/pages/dataManage/schoolList/sub/UpdateSchoolListView";
+import AddCityListView from "@/pages/dataManage/cityList/sub/AddCityListView";
+import UpdateCityListView from "@/pages/dataManage/cityList/sub/UpdateCityListView";
 
 // 权限名称
-const listAuth = 'schoolList';
+const listAuth = 'cityList';
 const opreAuth = {
-  add: 'schoolList_add',
-  update: 'schoolList_update',
-  delete: 'schoolList_delete'
+  add: 'cityList_add',
+  update: 'cityList_update',
+  delete: 'cityList_delete'
 };
 
 // 字段名称
-export const schoolListFieldName = {
-  schoolId: 'ID',
-  city: '城区',
-  name: '学校',
+export const cityListFieldName = {
+  cityId: 'ID',
+  name: '城区',
   operate: '操作'
 };
 
 // modelsname
-const modelsName = 'schoolList';
+const modelsName = 'cityList';
 
-const SchoolList = (props) => {
+const CityList = (props) => {
   const {
-    schoolList: { isSearch, pagination, data },
+    cityList: { isSearch, pagination, data },
     loading,
     dispatch,
-    exGlobal: { menuData, cityList }
+    exGlobal: { menuData }
   } = props;
   const [form] = Form.useForm();
 
@@ -54,29 +53,24 @@ const SchoolList = (props) => {
   // columns
   const columns = [
     {
-      title: schoolListFieldName['schoolId'],
-      dataIndex: 'schoolId',
-      key: 'schoolId',
+      title: cityListFieldName['cityId'],
+      dataIndex: 'cityId',
+      key: 'cityId',
     },
     {
-      title: schoolListFieldName['city'],
-      dataIndex: 'city',
-      key: 'city',
-    },
-    {
-      title: schoolListFieldName['name'],
+      title: cityListFieldName['name'],
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: schoolListFieldName['operate'],
+      title: cityListFieldName['operate'],
       key: 'operate',
       render: (data, record) => (
         <>
           {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
           {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
           {authDetail.delete === true && (
-            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.schoolId)}>
+            <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.cityId)}>
               <a>删除</a>
             </Popconfirm>
           )}
@@ -95,7 +89,7 @@ const SchoolList = (props) => {
     const submitData = value;
 
     dispatch({
-      type: `${modelsName}/addSchoolInfo`,
+      type: `${modelsName}/addCityInfo`,
       payload: submitData
     }).then((res) => {
       if (codeResult(res)) {
@@ -120,7 +114,6 @@ const SchoolList = (props) => {
     setUpdateVisable(true);
 
     form.setFieldsValue({
-      cityId: data.cityId,
       name: data.name
     });
   };
@@ -128,10 +121,10 @@ const SchoolList = (props) => {
     const { dispatch } = props;
     const submitData = data;
 
-    submitData.schoolId = recordData.schoolId;
+    submitData.cityId = recordData.cityId;
 
     dispatch({
-      type: `${modelsName}/updateSchoolInfo`,
+      type: `${modelsName}/updateCityInfo`,
       payload: submitData
     }).then((res) => {
       if (codeResult(res)) {
@@ -152,14 +145,14 @@ const SchoolList = (props) => {
   };
 
   // 删除
-  const handleDelete = (schoolId) => {
+  const handleDelete = (cityId) => {
     const { dispatch } = props;
     const submitData = {
-      schoolId
+      cityId
     }
 
     dispatch({
-      type: `${modelsName}/deleteSchoolInfo`,
+      type: `${modelsName}/deleteCityInfo`,
       payload: submitData
     }).then((res) => {
       if (codeResult(res)) {
@@ -220,7 +213,7 @@ const SchoolList = (props) => {
   // 获取数据, 收到的数据, 写到listData中，就是modal中的fetch函数
   const getCurrentList = (params) => {
     dispatch({
-      type: `${modelsName}/getSchoolList`,
+      type: `${modelsName}/getCityList`,
       payload: {
         ...params
       },
@@ -248,23 +241,17 @@ const SchoolList = (props) => {
         current: 1
       },
     });
-
-    // 获取城区列表
-    dispatch({
-      type: 'exGlobal/getCityList'
-    });
   }, []);
 
   return (
     <React.Fragment>
       {
         authDetail.add === true &&
-        <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
+        <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增城区</Button>
       }
-      <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
 
       <StandardTable
-        rowKey="schoolId"
+        rowKey="cityId"
         loading={loading}
         columns={columns}
         dataSource={data && data.data}
@@ -277,20 +264,18 @@ const SchoolList = (props) => {
         onShowSizeChange={onShowSizeChange}
       />
 
-      <AddSchoolListView
+      <AddCityListView
         form={form}
         modalVisible={addVisable}
         title="新增"
-        cityList={cityList}
         okHandle={addSubmit}
         onCancel={onCancels}
       />
 
-      <UpdateSchoolListView
+      <UpdateCityListView
         form={form}
         modalVisible={updateVisable}
         title="编辑"
-        cityList={cityList}
         recordData={recordData}
         okHandle={updateSubmit}
         onCancel={onCancels}
@@ -299,8 +284,8 @@ const SchoolList = (props) => {
   );
 };
 
-export default connect(({ schoolList, loading, exGlobal }) => ({
-  schoolList,
-  loading: loading.models.schoolList,
+export default connect(({ cityList, loading, exGlobal }) => ({
+  cityList,
+  loading: loading.models.cityList,
   exGlobal
-}))(SchoolList);
+}))(CityList);

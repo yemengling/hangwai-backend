@@ -24,7 +24,7 @@ const opreAuth = {
 
 // 字段名称
 export const accountListFieldName = {
-    id: 'ID',
+    userId: 'ID',
     account: '账户',
     role: '角色',
     operate: '操作'
@@ -54,9 +54,9 @@ const AccountList = (props) => {
     // columns
     const columns = [
         {
-            title: accountListFieldName['id'],
-            dataIndex: 'id',
-            key: 'id',
+            title: accountListFieldName['userId'],
+            dataIndex: 'userId',
+            key: 'userId',
         },
         {
             title: accountListFieldName['account'],
@@ -76,7 +76,7 @@ const AccountList = (props) => {
                     {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
                     {authDetail.update === true && authDetail.delete === true && <Divider type="vertical" />}
                     {authDetail.delete === true && (
-                        <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
+                        <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.userId)}>
                             <a>删除</a>
                         </Popconfirm>
                     )}
@@ -123,7 +123,7 @@ const AccountList = (props) => {
         const { dispatch } = props;
         const submitData = data;
 
-        submitData.id = recordData.id;
+        submitData.userId = recordData.userId;
 
         dispatch({
             type: `${modelsName}/updateAccountInfo`,
@@ -147,10 +147,10 @@ const AccountList = (props) => {
     };
 
     // 删除
-    const handleDelete = (id) => {
+    const handleDelete = (userId) => {
         const { dispatch } = props;
         const submitData = {
-            id
+            userId
         }
 
         dispatch({
@@ -160,6 +160,10 @@ const AccountList = (props) => {
             if (codeResult(res)) {
                 // 成功
                 notifications('success', '操作成功', '');
+
+                if (data.data.length == 1) {
+                    pagination.current = (pagination.current - 1) == 1 ? 1 : (pagination.current - 1);
+                }
 
                 updateCurrentPage({
                     isSearch,
@@ -254,7 +258,7 @@ const AccountList = (props) => {
             }
 
             <StandardTable
-                rowKey="id"
+                rowKey="userId"
                 loading={loading}
                 columns={columns}
                 dataSource={data && data.data}

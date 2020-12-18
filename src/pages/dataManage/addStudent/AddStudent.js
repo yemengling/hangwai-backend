@@ -6,14 +6,16 @@ import {
     notifications
 } from '@/utils/myUtils/commonUtils';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { formatCity, formatSchool } from "@/utils/myUtils/renderUtils";
 import FormList from '@/components/FormList';
+import moment from 'moment';
 
 // 字段名称
 export const addStudentFieldName = {
     isAdmit: '录取',
     sex: '性别',
     name: '姓名',
-    date: '年月',
+    date: '年月日',
     info: '信息'
 };
 
@@ -55,11 +57,11 @@ const AddStudent = (props) => {
             spanNum: 24,
             dataRadio: [
                 {
-                    id: 1,
+                    id: true,
                     text: '是'
                 },
                 {
-                    id: -1,
+                    id: false,
                     text: '否'
                 }
             ],
@@ -105,7 +107,7 @@ const AddStudent = (props) => {
             eleName: 'DatePicker',
             title: addStudentFieldName['date'],
             name: 'date',
-            picker: 'month',
+            picker: 'date',
             spanNum: 24,
             rules: [
                 {
@@ -122,9 +124,9 @@ const AddStudent = (props) => {
             formData: [
                 {
                     eleName: 'Select',
-                    name: 'city',
+                    name: 'cityId',
                     placeholder: '城区',
-                    dataSelect: cityList,
+                    dataSelect: formatCity(cityList),
                     rules: [
                         {
                             required: true,
@@ -134,9 +136,9 @@ const AddStudent = (props) => {
                 },
                 {
                     eleName: 'Select',
-                    name: 'school',
+                    name: 'schoolId',
                     placeholder: '学校',
-                    dataSelect: schoolList,
+                    dataSelect: formatSchool(schoolList),
                     rules: [
                         {
                             required: true,
@@ -163,40 +165,40 @@ const AddStudent = (props) => {
                                 <Space key={field.key} align="baseline">
                                     <Form.Item
                                         {...field}
-                                        name={[field.name, 'name']}
-                                        fieldKey={[field.fieldKey, 'name']}
+                                        name={[field.name, 'paper']}
+                                        fieldKey={[field.fieldKey, 'paper']}
                                         rules={[{ required: true, message: '请输入试卷名' }]}
                                     >
                                         <Input placeholder="试卷名" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
-                                        name={[field.name, 'first']}
-                                        fieldKey={[field.fieldKey, 'first']}
+                                        name={[field.name, 'part1']}
+                                        fieldKey={[field.fieldKey, 'part1']}
                                         rules={[{ required: true, message: '请输入第一部分' }]}
                                     >
                                         <Input placeholder="第一部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
-                                        name={[field.name, 'second']}
-                                        fieldKey={[field.fieldKey, 'second']}
+                                        name={[field.name, 'part2']}
+                                        fieldKey={[field.fieldKey, 'part2']}
                                         rules={[{ required: true, message: '请输入第二部分' }]}
                                     >
                                         <Input placeholder="第二部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
-                                        name={[field.name, 'third']}
-                                        fieldKey={[field.fieldKey, 'third']}
+                                        name={[field.name, 'part3']}
+                                        fieldKey={[field.fieldKey, 'part3']}
                                         rules={[{ required: true, message: '请输入第三部分' }]}
                                     >
                                         <Input placeholder="第三部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
-                                        name={[field.name, 'fourth']}
-                                        fieldKey={[field.fieldKey, 'fourth']}
+                                        name={[field.name, 'part4']}
+                                        fieldKey={[field.fieldKey, 'part4']}
                                         rules={[{ required: true, message: '请输入第四部分' }]}
                                     >
                                         <Input placeholder="第四部分" />
@@ -207,7 +209,7 @@ const AddStudent = (props) => {
                             <Form.Item>
                                 <Button type="dashed" icon={<PlusOutlined />} block onClick={() => add()}>
                                     添加试卷
-                            </Button>
+                                </Button>
                             </Form.Item>
                         </>
                     )}
@@ -221,18 +223,24 @@ const AddStudent = (props) => {
         const { dispatch } = props;
         const submitData = data;
 
-        dispatch({
-            type: `${modelsName}/addStudentInfo`,
-            payload: submitData
-        }).then((res) => {
-            if (codeResult(res)) {
-                // 成功
-                notifications('success', '操作成功', '');
-            } else {
-                // 失败
-                notifications('error', '系统提示', res.message);
-            }
-        });
+        if(submitData.papers && submitData.papers[0]){
+            submitData.date = moment(moment(submitData.date).valueOf()).format('YYYY-MM-DD');
+
+            dispatch({
+                type: `${modelsName}/addStudentInfo`,
+                payload: submitData
+            }).then((res) => {
+                if (codeResult(res)) {
+                    // 成功
+                    notifications('success', '操作成功', '');
+                } else {
+                    // 失败
+                    // notifications('error', '系统提示', res.message);
+                }
+            });
+        }else{
+            notifications('error', '系统提示', '请录入试卷');
+        }
     };
 
     // didMount
