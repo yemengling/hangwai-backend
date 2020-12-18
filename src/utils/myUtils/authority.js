@@ -2,14 +2,16 @@
 export const getAuthorityOpreateArea = (menuData, listAuth) => {
   let asOperation = [];
 
-  for (let i = 0; i < menuData.length; i++) {
-    if (menuData[i].pageEnName === listAuth) {
-      asOperation = menuData[i].operation;
-    } else if (menuData[i].children) {
-      asOperation = getAuthorityOpreateArea(menuData[i].children, listAuth);
-
-      if(asOperation.length > 0){
-        return asOperation;
+  if(menuData && menuData[0]){
+    for (let i = 0; i < menuData.length; i++) {
+      if (menuData[i].pageEnName === listAuth) {
+        asOperation = menuData[i].operation;
+      } else if (menuData[i].children) {
+        asOperation = getAuthorityOpreateArea(menuData[i].children, listAuth);
+      
+        if(asOperation && asOperation[0]){
+          return asOperation;
+        }
       }
     }
   }

@@ -42,6 +42,7 @@ const errorHandler = (error: { response: Response }): Response => {
       message: '网络异常',
     });
   }
+
   return response;
 };
 
@@ -51,6 +52,29 @@ const errorHandler = (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
+  headers: {
+    'token': localStorage.getItem('token')
+  }
 });
+
+request.interceptors.response.use(async (response) => {
+  const data = await response.clone().json();
+
+  // 统一报错信息。需特殊跳过的接口可以在这里跳过
+  if(data.c !== 1) {
+    // token 失效
+    if(data.c === 2002001) {
+      window.location.href = `${window.location.origin}/user/login`;
+    }else{
+      // ant 引入的组件
+      notification.error({
+        message: '系统提示',
+        description: data.d
+      })
+    }
+  }
+
+  return response;
+})
 
 export default request;

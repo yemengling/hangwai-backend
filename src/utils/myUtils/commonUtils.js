@@ -3,7 +3,7 @@ import { notification } from 'antd';
 // 判断code为成功
 export const codeResult = (res) => {
   try {
-    return res.code === 0;
+    return res.c === 1;
   } catch (e) {
     console.log(e);
   }
