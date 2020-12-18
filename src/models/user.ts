@@ -12,7 +12,7 @@ export interface CurrentUser {
     key: string;
     label: string;
   }[];
-  userid?: string;
+  userId?: string;
   unreadCount?: number;
 }
 
@@ -49,7 +49,7 @@ const UserModel: UserModelType = {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+      const response = yield call(queryCurrent, localStorage.getItem('account'));
       yield put({
         type: 'saveCurrentUser',
         payload: response,
@@ -61,7 +61,7 @@ const UserModel: UserModelType = {
     saveCurrentUser(state, action) {
       return {
         ...state,
-        currentUser: action.payload || {},
+        currentUser: action.payload.r || {},
       };
     },
     changeNotifyCount(

@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { history, Reducer, Effect } from 'umi';
 
-import { fakeAccountLogin } from '@/services/login';
+import { fakeAccountLogin, loginOut } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -38,7 +38,7 @@ const Model: LoginModelType = {
         payload: response,
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (response.c === 1) {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -55,19 +55,26 @@ const Model: LoginModelType = {
           }
         }
         history.replace(redirect || '/');
+
+        localStorage.setItem('token', response.r.token);
+        localStorage.setItem('account', response.r.account);
       }
     },
 
-    logout() {
-      const { redirect } = getPageQuery();
-      // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
-        history.replace({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        });
+    *logout(_, { call, put }) {
+      const response = yield call(loginOut, localStorage.getItem('token'));
+
+      if (response.c === 1) {
+        const { redirect } = getPageQuery();
+        // Note: There may be security issues, please note
+        if (window.location.pathname !== '/user/login' && !redirect) {
+          history.replace({
+            pathname: '/user/login',
+            search: stringify({
+              redirect: window.location.href,
+            }),
+          });
+        }
       }
     },
   },
@@ -75,9 +82,10 @@ const Model: LoginModelType = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
+
       return {
         ...state,
-        status: payload.status,
+        status: payload.c,
         type: payload.type,
       };
     },

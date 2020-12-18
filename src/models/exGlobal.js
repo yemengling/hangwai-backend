@@ -10,149 +10,35 @@ export default {
     },
     effects: {
         * getMenuData(_, { put, call }) {
-            // const response = yield call(getMenuData);
-
-            const response = {
-                code: 0,
-                data: [
-                    {
-                        pageEnName: 'dataManage',
-                        children: [
-                            {
-                                pageEnName: 'schoolList',
-                                operation: [
-                                    {
-                                        name: "新增",
-                                        pageEnName: "schoolList_add"
-                                    },
-                                    {
-                                        name: "编辑",
-                                        pageEnName: "schoolList_update"
-                                    },
-                                    {
-                                        name: "删除",
-                                        pageEnName: "schoolList_delete"
-                                    }
-                                ]
-                            },
-                            {
-                                pageEnName: 'studentList',
-                                operation: [
-                                    {
-                                        name: "新增",
-                                        pageEnName: "studentList_add"
-                                    },
-                                    {
-                                        name: "编辑",
-                                        pageEnName: "studentList_update"
-                                    },
-                                    {
-                                        name: "删除",
-                                        pageEnName: "studentList_delete"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        pageEnName: 'systemManage',
-                        children: [
-                            {
-                                pageEnName: 'roleList',
-                                operation: [
-                                    {
-                                        name: "新增",
-                                        pageEnName: "roleList_add"
-                                    },
-                                    {
-                                        name: "编辑",
-                                        pageEnName: "roleList_update"
-                                    },
-                                    {
-                                        name: "删除",
-                                        pageEnName: "roleList_delete"
-                                    }
-                                ]
-                            },
-                            {
-                                pageEnName: 'accountList',
-                                operation: [
-                                    {
-                                        name: "新增",
-                                        pageEnName: "accountList_add"
-                                    },
-                                    {
-                                        name: "编辑",
-                                        pageEnName: "accountList_update"
-                                    },
-                                    {
-                                        name: "删除",
-                                        pageEnName: "accountList_delete"
-                                    }
-                                ]
-                            },
-                        ]
-                    }
-                ]
-            }
+            const response = yield call(getMenuData);
 
             yield put({
                 type: 'saveMenuData',
-                payload: response.data
+                payload: response.r
             });
         },
         * getCityList(_, { put, call }) {
-            // const response = yield call(getCityList);
-
-            const response = {
-                code: 0,
-                data: [
-                    {
-                        id: 1,
-                        text: '城区1'
-                    }
-                ]
-            }
+            const response = yield call(getCityList);
 
             yield put({
                 type: 'saveCityList',
-                payload: response.data
+                payload: response.r
             });
         },
         * getSchoolList(_, { put, call }) {
-            // const response = yield call(getSchoolList);
-
-            const response = {
-                code: 0,
-                data: [
-                    {
-                        id: 1,
-                        text: '学校1'
-                    }
-                ]
-            }
+            const response = yield call(getSchoolList);
 
             yield put({
                 type: 'saveSchoolList',
-                payload: response.data
+                payload: response.r
             });
         },
         * getRoleList(_, { put, call }) {
-            // const response = yield call(getSchoolList);
-
-            const response = {
-                code: 0,
-                data: [
-                    {
-                        id: 1,
-                        text: '角色1'
-                    }
-                ]
-            }
-
+            const response = yield call(getSchoolList);
+            
             yield put({
                 type: 'saveRoleList',
-                payload: response.data
+                payload: response.r
             });
         }
     },
