@@ -71,6 +71,7 @@ const MyLogin = (props) => {
                     ]}
                 >
                     <Input
+                        type="password"
                         size="large"
                         prefix={
                             <LockTwoTone
