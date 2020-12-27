@@ -34,7 +34,7 @@ export default {
             });
         },
         * getRoleList(_, { put, call }) {
-            const response = yield call(getSchoolList);
+            const response = yield call(getRoleList);
             
             yield put({
                 type: 'saveRoleList',
