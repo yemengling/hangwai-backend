@@ -3,7 +3,7 @@ import { cityListFieldName } from "@/pages/dataManage/cityList/CityList";
 import MyModal from "@/components/MyModal";
 
 const AddCityListView = (props) => {
-    const { form, modalVisible, title, dispatch, okHandle, onCancel } = props;
+    const { form, modalVisible, title, okHandle, onCancel } = props;
 
     const element = [
         {

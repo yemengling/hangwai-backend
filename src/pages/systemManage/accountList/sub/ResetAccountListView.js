@@ -4,33 +4,24 @@ import { accountListFieldName } from "@/pages/systemManage/accountList/AccountLi
 import { formatRole } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
-const AddAccountListView = (props) => {
-    const { modalVisible, title, roleList, okHandle, onCancel } = props;
+const ResetAccountListView = (props) => {
+    const { modalVisible, title, okHandle, onCancel } = props;
     const [form] = Form.useForm();
 
     const element = [
         {
             eleName: 'Input',
-            title: accountListFieldName['account'],
-            name: 'account',
-            spanNum: 24,
-            rules: [
-                {
-                    required: true
-                }
-            ]
+            title: '密码',
+            type: 'password',
+            name: 'password',
+            spanNum: 24
         },
         {
-            eleName: 'Select',
-            title: accountListFieldName['roleName'],
-            name: 'roleId',
-            spanNum: 24,
-            dataSelect: formatRole(roleList),
-            rules: [
-                {
-                    required: true
-                }
-            ]
+            eleName: 'Input',
+            title: '确定密码',
+            type: 'password',
+            name: 'password2',
+            spanNum: 24
         },
     ];
 
@@ -46,4 +37,4 @@ const AddAccountListView = (props) => {
     )
 };
 
-export default AddAccountListView;
+export default ResetAccountListView;

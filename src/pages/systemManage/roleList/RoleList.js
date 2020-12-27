@@ -9,7 +9,6 @@ import {
     onChangePage,
     onChangePageSize
 } from '@/utils/myUtils/commonUtils';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import StandardTable from '@/components/StandardTable';
 import AddRoleListView from "@/pages/systemManage/roleList/sub/AddRoleListView";
 import UpdateRoleListView from "@/pages/systemManage/roleList/sub/UpdateRoleListView";
@@ -26,9 +25,7 @@ const opreAuth = {
 export const roleListFieldName = {
     roleId: 'ID',
     name: '角色',
-    isAdd: '新增',
-    isUpdate: '编辑',
-    isDelete: '删除',
+    permissionList: '权限',
     remark: '备注',
     operate: '操作'
 };
@@ -67,32 +64,18 @@ const RoleList = (props) => {
             key: 'name',
         },
         {
-            title: roleListFieldName['isAdd'],
-            dataIndex: 'isAdd',
-            key: 'isAdd',
+            title: roleListFieldName['permissionList'],
+            dataIndex: 'permissionList',
+            key: 'permissionList',
             render: (data, record) => (
                 <>
-                    {data === 1 ? <CheckOutlined /> : <CloseOutlined />}
-                </>
-            )
-        },
-        {
-            title: roleListFieldName['isUpdate'],
-            dataIndex: 'isUpdate',
-            key: 'isUpdate',
-            render: (data, record) => (
-                <>
-                    {data === 1 ? <CheckOutlined /> : <CloseOutlined />}
-                </>
-            )
-        },
-        {
-            title: roleListFieldName['isDelete'],
-            dataIndex: 'isDelete',
-            key: 'isDelete',
-            render: (data, record) => (
-                <>
-                    {data === 1 ? <CheckOutlined /> : <CloseOutlined />}
+                    {data.map((item, key) => {
+                        return (
+                            <span key={item.permissionId}>
+                                {item.permissionName}{key == data.length - 1 ? '' : '，'}
+                            </span>
+                        );
+                    })}
                 </>
             )
         },
@@ -149,19 +132,6 @@ const RoleList = (props) => {
 
     // 编辑
     const handleUpdate = (data) => {
-        let checkList = [];
-
-        if (data.isAdd === 1) {
-            checkList.push('add');
-        }
-        if (data.isUpdate === 1) {
-            checkList.push('update');
-        }
-        if (data.isDelete === 1) {
-            checkList.push('delete');
-        }
-        data.checkList = checkList;
-
         setRecordData(data);
         setUpdateVisable(true);
     };
@@ -298,8 +268,6 @@ const RoleList = (props) => {
                 <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增角色</Button>
             }
 
-            <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增角色</Button>
-
             <StandardTable
                 rowKey="roleId"
                 loading={loading}
@@ -317,6 +285,7 @@ const RoleList = (props) => {
             <AddRoleListView
                 modalVisible={addVisable}
                 title="新增"
+                menuData={menuData}
                 okHandle={addSubmit}
                 onCancel={onCancels}
             />
@@ -324,6 +293,7 @@ const RoleList = (props) => {
             <UpdateRoleListView
                 modalVisible={updateVisable}
                 title="编辑"
+                menuData={menuData}
                 recordData={recordData}
                 okHandle={updateSubmit}
                 onCancel={onCancels}

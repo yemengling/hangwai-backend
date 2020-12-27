@@ -3,7 +3,7 @@ import { cityListFieldName } from "@/pages/dataManage/cityList/CityList";
 import MyModal from "@/components/MyModal";
 
 const UpdateCityListView = (props) => {
-    const { form, modalVisible, title, recordData, dispatch, okHandle, onCancel } = props;
+    const { form, modalVisible, title, recordData, okHandle, onCancel } = props;
     
     const element = [
         {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { PageHeader } from 'antd';
 import { connect } from 'dva';
 import {
     onChangePage,
@@ -127,6 +128,14 @@ const ScoreDetail = (props) => {
 
     return (
         <React.Fragment>
+            <PageHeader
+                style={{
+                    padding: '0 0 15px 0'
+                }}
+                onBack={() => window.history.back()}
+                title="返回"
+            />
+
             <StandardTable
                 rowKey="id"
                 loading={loading}

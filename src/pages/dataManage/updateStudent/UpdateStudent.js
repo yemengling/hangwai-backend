@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Row, Col, Space, Input, Button } from 'antd';
+import { Form, Row, Col, Space, Input, InputNumber, Button } from 'antd';
 import { connect } from 'dva';
 import {
     codeResult,
     notifications
 } from '@/utils/myUtils/commonUtils';
-import { useLocation } from "umi";
+import { history, useLocation } from "umi";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { formatCity, formatSchool } from "@/utils/myUtils/renderUtils";
 import FormList from '@/components/FormList';
@@ -16,7 +16,7 @@ export const updateStudentFieldName = {
     isAdmit: '录取',
     sex: '性别',
     name: '姓名',
-    date: '年月',
+    date: '日期',
     info: '信息'
 };
 
@@ -181,7 +181,7 @@ const UpdateStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part1']}
                                         rules={[{ required: true, message: '请输入第一部分' }]}
                                     >
-                                        <Input placeholder="第一部分" />
+                                        <InputNumber placeholder="第一部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -189,7 +189,7 @@ const UpdateStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part2']}
                                         rules={[{ required: true, message: '请输入第二部分' }]}
                                     >
-                                        <Input placeholder="第二部分" />
+                                        <InputNumber placeholder="第二部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -197,7 +197,7 @@ const UpdateStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part3']}
                                         rules={[{ required: true, message: '请输入第三部分' }]}
                                     >
-                                        <Input placeholder="第三部分" />
+                                        <InputNumber placeholder="第三部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -205,7 +205,7 @@ const UpdateStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part4']}
                                         rules={[{ required: true, message: '请输入第四部分' }]}
                                     >
-                                        <Input placeholder="第四部分" />
+                                        <InputNumber placeholder="第四部分" />
                                     </Form.Item>
                                     <MinusCircleOutlined onClick={() => remove(field.name)} />
                                 </Space>
@@ -238,6 +238,7 @@ const UpdateStudent = (props) => {
                 if (codeResult(res)) {
                     // 成功
                     notifications('success', '操作成功', '');
+                    history.push('/dataManage/studentList');
                 } else {
                     // 失败
                     // notifications('error', '系统提示', res.message);
@@ -247,6 +248,10 @@ const UpdateStudent = (props) => {
             notifications('error', '系统提示', '请录入试卷');
         }
     };
+
+    const handleCancel = () => {
+        history.push('/dataManage/studentList');
+    }
 
     // 获取数据, 收到的数据, 写到infoData中，就是modal中的fetch函数
     const getCurrentInfo = (params) => {
@@ -287,6 +292,7 @@ const UpdateStudent = (props) => {
                 element={element}
                 extraDom={extraDom}
                 onSubmit={handleSubmit}
+                onCancel={handleCancel}
             />
         </React.Fragment>
     );

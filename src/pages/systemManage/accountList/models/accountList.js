@@ -1,5 +1,5 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getAccountList, addAccountInfo, updateAccountInfo, deleteAccountInfo } from '@/services/systemManage/accountListApi';
+import { getAccountList, addAccountInfo, updateAccountInfo, deleteAccountInfo, resetAccountInfo } from '@/services/systemManage/accountListApi';
 
 export default {
     namespace: 'accountList',
@@ -28,26 +28,12 @@ export default {
     effects: {
         // 获取列表
         * getAccountList({ payload }, { call, put }) {
-            // const response = yield call(getSchoolList, payload);
-
-            const response = {
-                code: 0,
-                data: {
-                    list: [
-                        {
-                            id: '1',
-                            account: '账号1',
-                            role: '角色1',
-                        },
-                    ],
-                    total: 1,
-                },
-            };
+            const response = yield call(getAccountList, payload);
 
             if (codeResult(response)) {
                 yield put({
                     type: 'save',
-                    payload: response.data,
+                    payload: response.r,
                 });
             }
 
@@ -68,6 +54,11 @@ export default {
         // 删除
         * deleteAccountInfo({ payload }, { call, put }) {
             return yield call(deleteAccountInfo, payload);
+        },
+
+        // 重置密码
+        * resetAccountInfo({ payload }, { call, put }) {
+            return yield call(resetAccountInfo, payload);
         }
     },
 
@@ -78,7 +69,7 @@ export default {
                 ...state,
                 data: {
                     data: action.payload.list,
-                    totalCount: action.payload.total,
+                    totalCount: action.payload.count.recordCount,
                 },
             };
         },

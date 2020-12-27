@@ -4,7 +4,7 @@ import { formatCity } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const AddSchoolListView = (props) => {
-    const { form, modalVisible, title, cityList, dispatch, okHandle, onCancel } = props;
+    const { form, modalVisible, title, cityList, okHandle, onCancel } = props;
 
     const element = [
         {

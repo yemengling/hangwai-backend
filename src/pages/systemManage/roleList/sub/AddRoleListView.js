@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form } from 'antd';
 import { roleListFieldName } from "@/pages/systemManage/roleList/RoleList";
+import { formatAuthority } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const AddRoleListView = (props) => {
-    const { modalVisible, title, dispatch, okHandle, onCancel } = props;
+    const { modalVisible, title, menuData, okHandle, onCancel } = props;
     const [form] = Form.useForm();
 
     const element = [
@@ -12,34 +13,36 @@ const AddRoleListView = (props) => {
             eleName: 'Input',
             title: roleListFieldName['name'],
             name: 'name',
-            spanNum: 24
+            spanNum: 24,
+            rules: [
+                {
+                    required: true
+                }
+            ]
         },
         {
             eleName: 'Input',
             title: roleListFieldName['remark'],
             name: 'remark',
-            spanNum: 24
-        },
-        {
-            eleName: 'CheckboxGroup',
-            title: '权限',
-            name: 'permissionList',
             spanNum: 24,
-            dataCheck: [
+            rules: [
                 {
-                    id: 'create',
-                    text: '新增'
-                },
-                {
-                    id: 'update',
-                    text: '编辑'
-                },
-                {
-                    id: 'delete',
-                    text: '删除'
+                    required: true
                 }
             ]
         },
+        {
+            eleName: 'TreeSelect',
+            title: '权限',
+            name: 'permissionIds',
+            spanNum: 24,
+            dataTree: formatAuthority(menuData),
+            rules: [
+                {
+                    required: true
+                }
+            ]
+        }
     ];
 
     return (

@@ -15,7 +15,7 @@ export default {
         // 获取列表
         * getStudentInfo({ payload }, { call, put }) {
             const response = yield call(getStudentInfo, payload);
-            const studentInfo = response.r.list[0];
+            const studentInfo = response.r;
             const formVal = {
                 isAdmit: studentInfo.isAdmit,
                 sex: studentInfo.sex,
@@ -23,7 +23,7 @@ export default {
                 date: moment(studentInfo.date, 'YY-MM'),
                 cityId: studentInfo.cityId,
                 schoolId: studentInfo.schoolId,
-                papers: studentInfo.papers
+                papers: JSON.parse(studentInfo.papers)
             };
 
             if (codeResult(response)) {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form } from 'antd';
 import { accountListFieldName } from "@/pages/systemManage/accountList/AccountList";
+import { formatRole } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const UpdateAccountListView = (props) => {
-    const { modalVisible, title, roleList, recordData, dispatch, okHandle, onCancel } = props;
+    const { modalVisible, title, roleList, recordData, okHandle, onCancel } = props;
     const [form] = Form.useForm();
 
     const element = [
@@ -13,16 +14,25 @@ const UpdateAccountListView = (props) => {
             title: accountListFieldName['account'],
             name: 'account',
             initialValue: recordData.account,
-            spanNum: 24
+            spanNum: 24,
+            rules: [
+                {
+                    required: true
+                }
+            ]
         },
         {
             eleName: 'Select',
-            title: accountListFieldName['role'],
-            name: 'role',
-            initialValue: '',
+            title: accountListFieldName['roleName'],
+            name: 'roleId',
+            initialValue: recordData.roleId,
             spanNum: 24,
-            initialValue: recordData.role,
-            dataSelect: roleList
+            dataSelect: formatRole(roleList),
+            rules: [
+                {
+                    required: true
+                }
+            ]
         },
     ];
 

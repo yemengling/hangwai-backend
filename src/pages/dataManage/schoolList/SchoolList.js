@@ -261,7 +261,6 @@ const SchoolList = (props) => {
         authDetail.add === true &&
         <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
       }
-      <Button onClick={() => handleAdd()} type="primary" style={{ marginBottom: "10px" }}>+ 新增学校</Button>
 
       <StandardTable
         rowKey="schoolId"

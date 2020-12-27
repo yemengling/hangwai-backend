@@ -28,28 +28,12 @@ export default {
     effects: {
         // 获取列表
         * getRoleList({ payload }, { call, put }) {
-            // const response = yield call(getSchoolList, payload);
-
-            const response = {
-                code: 0,
-                data: {
-                    list: [
-                        {
-                            id: '1',
-                            name: '角色1',
-                            isAdd: 1,
-                            isUpdate: 1,
-                            isDelete: 1,
-                        },
-                    ],
-                    total: 1,
-                },
-            };
+            const response = yield call(getRoleList, payload);
 
             if (codeResult(response)) {
                 yield put({
                     type: 'save',
-                    payload: response.data,
+                    payload: response.r,
                 });
             }
 
@@ -80,7 +64,7 @@ export default {
                 ...state,
                 data: {
                     data: action.payload.list,
-                    totalCount: action.payload.total,
+                    totalCount: action.payload.count.recordCount,
                 },
             };
         },

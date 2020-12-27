@@ -28,37 +28,30 @@ export default {
   effects: {
     // 获取列表
     * getScoreDetail({ payload }, { call, put }) {
-      // const response = yield call(getSchoolList, payload);
-
-      const response = {
-        code: 0,
-        data: {
-          list: [
-            {
-              id: 1,
-              paper: '试卷1',
-              part1: '10',
-              part2: '20',
-              part3: '30',
-              part4: '40',
-            },
-            {
-              id: 2,
-              paper: '试卷2',
-              part1: '15',
-              part2: '25',
-              part3: '35',
-              part4: '45',
-            },
-          ],
-          total: 2,
-        },
+      const response = yield call(getScoreDetail, payload);
+      const asPapers = JSON.parse(response.r.papers);
+      const studentInfo = {
+        list: [],
+        total: 1
       };
+
+      for(let i = 0; i < asPapers.length; i++){
+        const oPapers = {
+          id: i + 1,
+          paper: asPapers[i].paper,
+          part1: asPapers[i].part1,
+          part2: asPapers[i].part2,
+          part3: asPapers[i].part3,
+          part4: asPapers[i].part4
+        };
+
+        studentInfo.list.push(oPapers);
+      }
 
       if (codeResult(response)) {
         yield put({
           type: 'save',
-          payload: response.data,
+          payload: studentInfo,
         });
       }
 

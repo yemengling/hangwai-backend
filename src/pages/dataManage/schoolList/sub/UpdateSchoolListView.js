@@ -4,7 +4,7 @@ import { formatCity } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const UpdateSchoolListView = (props) => {
-    const { form, modalVisible, title, cityList, recordData, dispatch, okHandle, onCancel } = props;
+    const { form, modalVisible, title, cityList, recordData, okHandle, onCancel } = props;
     
     const element = [
         {

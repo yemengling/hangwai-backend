@@ -30,33 +30,6 @@ export default {
     * getStudentList({ payload }, { call, put }) {
       const response = yield call(getStudentList, payload);
 
-      // const response = {
-      //   code: 0,
-      //   data: {
-      //     list: [
-      //       {
-      //         id: '1',
-      //         name: '姓名1',
-      //         date: '2001-02',
-      //         city: '城区1',
-      //         school: '学校1',
-      //         scroe: '100',
-      //         isAdmit: '是',
-      //       },
-      //       {
-      //         id: '2',
-      //         name: '姓名2',
-      //         date: '2002-02',  
-      //         city: '城区2',
-      //         school: '学校2',
-      //         scroe: '102',
-      //         isAdmit: '否',
-      //       },
-      //     ],
-      //     total: 2,
-      //   },
-      // };
-
       if (codeResult(response)) {
         yield put({
           type: 'save',

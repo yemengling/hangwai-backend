@@ -30,7 +30,7 @@ export const studentListFieldName = {
   date: '年月',
   city: '城区',
   school: '学校',
-  scroe: '总成绩',
+  score: '总成绩',
   isAdmit: '录取',
   operate: '操作',
 };
@@ -83,12 +83,12 @@ const StudentList = (props) => {
       key: 'school',
     },
     {
-      title: studentListFieldName['scroe'],
-      dataIndex: 'scroe',
-      key: 'scroe',
+      title: studentListFieldName['score'],
+      dataIndex: 'score',
+      key: 'score',
       render: (data, record) => (
         <>
-          {record.scroe}
+          {record.score}
           <Divider type="vertical" />
           {<Link to={`/dataManage/scoreDetail?id=${record.studentId}`}>查看详情</Link>}
         </>
@@ -117,12 +117,6 @@ const StudentList = (props) => {
               <a>删除</a>
             </Popconfirm>
           )}
-
-          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.studentId)}>
-            <a>删除</a>
-          </Popconfirm>
-
-          <Link to={`/dataManage/updateStudent?id=${record.studentId}`}>编辑</Link>
         </>
       ),
     },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Row, Col, Space, Input, Button } from 'antd';
+import { Form, Row, Col, Space, Input, InputNumber, Button } from 'antd';
 import { connect } from 'dva';
 import {
     codeResult,
@@ -15,7 +15,7 @@ export const addStudentFieldName = {
     isAdmit: '录取',
     sex: '性别',
     name: '姓名',
-    date: '年月日',
+    date: '日期',
     info: '信息'
 };
 
@@ -132,7 +132,13 @@ const AddStudent = (props) => {
                             required: true,
                             message: '请输入城区'
                         }
-                    ]
+                    ],
+                    onChange: function(value){
+                        // 获取学校列表
+                        if(value){
+                            getSchoolList(value);
+                        }
+                    }
                 },
                 {
                     eleName: 'Select',
@@ -144,7 +150,10 @@ const AddStudent = (props) => {
                             required: true,
                             message: '请输入学校'
                         }
-                    ]
+                    ],
+                    onChange: function(){
+                        console.log(2)
+                    }
                 }
             ]
         }
@@ -177,7 +186,7 @@ const AddStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part1']}
                                         rules={[{ required: true, message: '请输入第一部分' }]}
                                     >
-                                        <Input placeholder="第一部分" />
+                                        <InputNumber placeholder="第一部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -185,7 +194,7 @@ const AddStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part2']}
                                         rules={[{ required: true, message: '请输入第二部分' }]}
                                     >
-                                        <Input placeholder="第二部分" />
+                                        <InputNumber placeholder="第二部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -193,7 +202,7 @@ const AddStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part3']}
                                         rules={[{ required: true, message: '请输入第三部分' }]}
                                     >
-                                        <Input placeholder="第三部分" />
+                                        <InputNumber placeholder="第三部分" />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -201,7 +210,7 @@ const AddStudent = (props) => {
                                         fieldKey={[field.fieldKey, 'part4']}
                                         rules={[{ required: true, message: '请输入第四部分' }]}
                                     >
-                                        <Input placeholder="第四部分" />
+                                        <InputNumber placeholder="第四部分" />
                                     </Form.Item>
                                     <MinusCircleOutlined onClick={() => remove(field.name)} />
                                 </Space>
@@ -218,6 +227,22 @@ const AddStudent = (props) => {
         </Row>
         ;
 
+
+    const getSchoolList = (cityId) => {
+        const submitData = {
+            cityId
+        }
+
+        console.log(submitData)
+
+        // 获取学校列表
+        dispatch({
+            type: 'exGlobal/getSchoolList',
+            payload: submitData
+        }).then((res) => {
+            
+        });
+    } 
 
     const handleSubmit = (data) => {
         const { dispatch } = props;
@@ -248,11 +273,6 @@ const AddStudent = (props) => {
         // 获取城区列表
         dispatch({
             type: 'exGlobal/getCityList'
-        });
-
-        // 获取学校列表
-        dispatch({
-            type: 'exGlobal/getSchoolList'
         });
     }, []);
 

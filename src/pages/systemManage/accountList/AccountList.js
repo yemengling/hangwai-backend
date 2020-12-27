@@ -13,20 +13,22 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import StandardTable from '@/components/StandardTable';
 import AddAccountListView from "@/pages/systemManage/accountList/sub/AddAccountListView";
 import UpdateAccountListView from "@/pages/systemManage/accountList/sub/UpdateAccountListView";
+import ResetAccountListView from "@/pages/systemManage/accountList/sub/ResetAccountListView";
 
 // 权限名称
 const listAuth = 'accountList';
 const opreAuth = {
     add: 'accountList_add',
     update: 'accountList_update',
-    delete: 'accountList_delete'
+    delete: 'accountList_delete',
+    reset: 'accountList_setNewPassword'
 };
 
 // 字段名称
 export const accountListFieldName = {
     userId: 'ID',
     account: '账户',
-    role: '角色',
+    roleName: '角色',
     operate: '操作'
 };
 
@@ -49,6 +51,7 @@ const AccountList = (props) => {
     // const [selectedRows, setSelectedRows] = useState([]);
     const [addVisable, setAddVisable] = useState(false);
     const [updateVisable, setUpdateVisable] = useState(false);
+    const [resetVisable, setResetVisable] = useState(false);
     const [recordData, setRecordData] = useState({});
 
     // columns
@@ -64,9 +67,9 @@ const AccountList = (props) => {
             key: 'account',
         },
         {
-            title: accountListFieldName['role'],
-            dataIndex: 'role',
-            key: 'role'
+            title: accountListFieldName['roleName'],
+            dataIndex: 'roleName',
+            key: 'roleName'
         },
         {
             title: accountListFieldName['operate'],
@@ -80,6 +83,8 @@ const AccountList = (props) => {
                             <a>删除</a>
                         </Popconfirm>
                     )}
+                    {authDetail.delete === true && authDetail.reset === true && <Divider type="vertical" />}
+                    {authDetail.reset === true && <a onClick={() => handleReset(data)}>重置密码</a>}
                 </>
             )
         },
@@ -178,10 +183,44 @@ const AccountList = (props) => {
         });
     };
 
+    // 重置密码
+    const handleReset = (data) => {
+        setRecordData(data);
+        setResetVisable(true);
+    }
+    const resetSubmit = (data) => {
+        const { dispatch } = props;
+        const submitData = data;
+
+        submitData.account = recordData.account;
+
+        console.log(submitData);
+
+        dispatch({
+            type: `${modelsName}/resetAccountInfo`,
+            payload: submitData
+        }).then((res) => {
+            if (codeResult(res)) {
+                // 成功
+                updateCurrentPage({
+                    isSearch,
+                    pagination,
+                    method: getCurrentList
+                });
+                onCancels();
+                notifications('success', '操作成功', '');
+            } else {
+                // 失败
+                notifications('error', '系统提示', res.message);
+            }
+        });
+    }
+
     // 弹窗-取消
     const onCancels = () => {
         setAddVisable(false);
         setUpdateVisable(false);
+        setResetVisable(false);
         setRecordData({});
     };
 
@@ -285,6 +324,13 @@ const AccountList = (props) => {
                 roleList={roleList}
                 recordData={recordData}
                 okHandle={updateSubmit}
+                onCancel={onCancels}
+            />
+
+            <ResetAccountListView
+                modalVisible={resetVisable}
+                title="重置密码"
+                okHandle={resetSubmit}
                 onCancel={onCancels}
             />
         </React.Fragment>
