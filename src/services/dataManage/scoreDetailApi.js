@@ -2,12 +2,6 @@ import { buildUrl } from '@/utils/myUtils/stringUtils.js';
 import request from '@/utils/request';
 
 // 获取列表
-export const getStudentList = (params) => {
-  let url = `/?`;
-
-  const valueArr = ['id', 'pageSize', 'pageIndex'];
-
-  url = buildUrl({ url, valueArr, value: params });
-
-  return request(url);
+export const getScoreDetail = (params) => {
+  return request(`/api/student/${params.id}`);
 };

@@ -3,13 +3,7 @@ import request from '@/utils/request';
 
 // 获取学生信息
 export const getStudentInfo = (params) => {
-    let url = `/api/student?`;
-
-    const valueArr = ['id'];
-
-    url = buildUrl({ url, valueArr, value: params });
-
-    return request(url);
+    return request(`/api/student/${params.id}`);
 };
 
 // 编辑

@@ -3,7 +3,7 @@ import request from '@/utils/request';
 
 // 获取列表
 export const getRoleList = (params) => {
-    let url = `/read?`;
+    let url = `/api/base/user/role/getList?`;
 
     const valueArr = ['pageSize', 'pageIndex'];
 
@@ -30,7 +30,7 @@ export const updateRoleInfo = (params) => {
 
 // 删除
 export const deleteRoleInfo = (params) => {
-    return request(`/base/user/role/${params.roleId}`, {
+    return request(`/api/base/user/role/${params.roleId}`, {
         method: "DELETE"
     })
 };

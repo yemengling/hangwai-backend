@@ -27,11 +27,13 @@ export const getCityList = (params) => {
 export const getSchoolList = (params) => {
     let url = `/api/school/all`;
 
-    const valueArr = [];
+    console.log(params)
 
-    url = buildUrl({ url, valueArr, value: params });
-
-    return request(url);
+    if(params){
+        return request(`${url}/${params.cityId}`);
+    }else{
+        return request(url);
+    }
 };
 
 // 获取角色列表

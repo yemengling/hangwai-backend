@@ -3,7 +3,7 @@ import request from '@/utils/request';
 
 // 获取列表
 export const getAccountList = (params) => {
-    let url = `/api/base/user?`;
+    let url = `/api/base/user/getList?`;
 
     const valueArr = ['pageSize', 'pageIndex'];
 
@@ -32,5 +32,13 @@ export const updateAccountInfo = (params) => {
 export const deleteAccountInfo = (params) => {
     return request(`/api/base/user/${params.userId}`, {
         method: "DELETE"
+    })
+};
+
+// 重置密码
+export const resetAccountInfo = (params) => {
+    return request('/api/base/user/setNewPassword', {
+        method: "POST",
+        data: params
     })
 };
