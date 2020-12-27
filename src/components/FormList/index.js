@@ -10,7 +10,7 @@ class FormList extends Component {
 
     // 配置表单元素
     selectElement = () => {
-        const { formLayout, element, extraDom } = this.props;
+        const { formLayout, element, extraDom, onCancel } = this.props;
 
         let ele = '';
         let submit = '';
@@ -106,6 +106,10 @@ class FormList extends Component {
                 <Form.Item className={styles.submit} {...buttonItemLayout}>
                     <Button type="primary" htmlType="submit">
                         保存
+                    </Button>
+
+                    <Button type="link" htmlType="button" onClick={onCancel}>
+                        取消
                     </Button>
                 </Form.Item>
         }

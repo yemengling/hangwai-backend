@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Form, Col, Row, Button } from 'antd';
-import { getInput, getCheckboxGroup, getSelect } from './element';
+import { getInput, getCheckboxGroup, getSelect, getTreeSelect } from './element';
 import styles from './index.less';
 
 class MyModal extends Component {
@@ -43,6 +43,7 @@ class MyModal extends Component {
                         title,
                         name,
                         comFun: getInput({
+                            type: item.type,
                             placeholder: item.placeholder,
                             initialValue: item.initialValue
                         }),
@@ -70,6 +71,20 @@ class MyModal extends Component {
                         name,
                         comFun: getSelect({
                             dataSelect: item.dataSelect,
+                            placeholder: item.placeholder,
+                            initialValue: item.initialValue
+                        }),
+                        _props: { ...item }
+                    })
+                }
+
+                if(eleName === 'TreeSelect'){
+                    rowEle = this.formCol({
+                        key,
+                        title,
+                        name,
+                        comFun: getTreeSelect({
+                            dataTree: item.dataTree,
                             placeholder: item.placeholder,
                             initialValue: item.initialValue
                         }),

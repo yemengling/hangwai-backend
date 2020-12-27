@@ -1,9 +1,10 @@
-import { Row, Col, Input, Checkbox, Select } from 'antd';
+import { Row, Col, Input, Checkbox, Select, TreeSelect } from 'antd';
 const { Option } = Select;
+const { SHOW_PARENT } = TreeSelect;
 
 // Input
-export const getInput = ({ placeholder, initialValue }) => {
-    return <Input placeholder={placeholder} value={initialValue} />;
+export const getInput = ({ type, placeholder, initialValue }) => {
+    return <Input type={type ? type : 'text'} placeholder={placeholder} value={initialValue} />;
 }
 
 // Check.Group
@@ -37,5 +38,28 @@ export const getSelect = ({ dataSelect, placeholder, initialValue }) => {
                 )
             })}
         </Select>
+    )
+}
+
+// TreeSelect 
+export const getTreeSelect = ({ dataTree, placeholder, initialValue }) => {
+    // state = {
+    //     value: initialValue,
+    // };
+
+    // const onChange = value => {
+    //     this.setState({ value });
+    // }
+
+    console.log(SHOW_PARENT)
+
+    return (
+        <TreeSelect
+            treeData={dataTree}
+            value={initialValue}
+            treeCheckable={true}
+            showCheckedStrategy={SHOW_PARENT}
+            placeholder={placeholder}
+        />
     )
 }

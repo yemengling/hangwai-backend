@@ -14,7 +14,7 @@ export const getDatePicker = ({ picker, placeholder }) => {
 // Select
 export const getSelect = ({ styles, dataSelect, placeholder, ..._props }) => {
     return (
-        <Select key={_props.key} placeholder={placeholder} style={{ ...styles }}>
+        <Select key={_props.key} placeholder={placeholder} style={{ ...styles }} onChange={_props.onChange}>
             {dataSelect && dataSelect[0] && dataSelect.map((item, key) => {
                 return (
                     <Option key={key} value={item.id}>
