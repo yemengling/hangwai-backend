@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Popconfirm, Divider } from 'antd';
+import { Form, Button, Popconfirm, Divider } from 'antd';
 import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
 import {
@@ -9,6 +9,7 @@ import {
     onChangePage,
     onChangePageSize
 } from '@/utils/myUtils/commonUtils';
+import { formatTree } from "@/utils/myUtils/renderUtils";
 import StandardTable from '@/components/StandardTable';
 import AddRoleListView from "@/pages/systemManage/roleList/sub/AddRoleListView";
 import UpdateRoleListView from "@/pages/systemManage/roleList/sub/UpdateRoleListView";
@@ -38,8 +39,9 @@ const RoleList = (props) => {
         roleList: { isSearch, pagination, data },
         loading,
         dispatch,
-        exGlobal: { menuData }
+        exGlobal: { menuData, permissionList }
     } = props;
+    const [form] = Form.useForm();
 
     // 获取操作的权限
     const areaArr = getAuthorityOpreateArea(menuData, listAuth);
@@ -87,6 +89,8 @@ const RoleList = (props) => {
         {
             title: roleListFieldName['operate'],
             key: 'operate',
+            fixed: 'right',
+            width: 200,
             render: (data, record) => (
                 <>
                     {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
@@ -105,6 +109,8 @@ const RoleList = (props) => {
     // 新增
     const handleAdd = () => {
         setAddVisable(true);
+
+        form.resetFields();
     };
     const addSubmit = (value) => {
         const { dispatch } = props;
@@ -122,7 +128,7 @@ const RoleList = (props) => {
                     method: getCurrentList
                 });
                 onCancels();
-                notifications('success', '操作成功', '');
+                notifications('success', '操作成功', '');    
             } else {
                 // 失败
                 notifications('error', '系统提示', res.message);
@@ -134,6 +140,13 @@ const RoleList = (props) => {
     const handleUpdate = (data) => {
         setRecordData(data);
         setUpdateVisable(true);
+
+        form.resetFields();
+        form.setFieldsValue({
+            name: data.name,
+            remark: data.remark,
+            permissionIds: formatTree(data.permissionIds)
+        });
     };
     const updateSubmit = (data) => {
         const { dispatch } = props;
@@ -259,6 +272,11 @@ const RoleList = (props) => {
                 current: 1
             },
         });
+
+        // 获取权限列表
+        dispatch({
+            type: 'exGlobal/getPermissionList'
+        });
     }, []);
 
     return (
@@ -269,6 +287,7 @@ const RoleList = (props) => {
             }
 
             <StandardTable
+                scroll={{ x: 800 }}
                 rowKey="roleId"
                 loading={loading}
                 columns={columns}
@@ -283,17 +302,19 @@ const RoleList = (props) => {
             />
 
             <AddRoleListView
+                form={form}
                 modalVisible={addVisable}
                 title="新增"
-                menuData={menuData}
+                permissionList={permissionList}
                 okHandle={addSubmit}
                 onCancel={onCancels}
             />
 
             <UpdateRoleListView
+                form={form}
                 modalVisible={updateVisable}
                 title="编辑"
-                menuData={menuData}
+                permissionList={permissionList}
                 recordData={recordData}
                 okHandle={updateSubmit}
                 onCancel={onCancels}

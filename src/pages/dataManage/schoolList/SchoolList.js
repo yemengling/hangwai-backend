@@ -71,6 +71,8 @@ const SchoolList = (props) => {
     {
       title: schoolListFieldName['operate'],
       key: 'operate',
+      fixed: 'right',
+      width: 200,
       render: (data, record) => (
         <>
           {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
@@ -89,6 +91,8 @@ const SchoolList = (props) => {
   // 新增
   const handleAdd = () => {
     setAddVisable(true);
+
+    form.resetFields();
   };
   const addSubmit = (value) => {
     const { dispatch } = props;
@@ -119,6 +123,7 @@ const SchoolList = (props) => {
     setRecordData(data);
     setUpdateVisable(true);
 
+    form.resetFields();
     form.setFieldsValue({
       cityId: data.cityId,
       name: data.name
@@ -263,6 +268,7 @@ const SchoolList = (props) => {
       }
 
       <StandardTable
+        scroll={{ x: 600 }}
         rowKey="schoolId"
         loading={loading}
         columns={columns}

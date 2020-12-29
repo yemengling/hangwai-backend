@@ -136,7 +136,17 @@ const UpdateStudent = (props) => {
                             required: true,
                             message: '请输入城区'
                         }
-                    ]
+                    ],
+                    onChange: function(value){
+                        // 获取学校列表
+                        if(value){
+                            getSchoolList(value);
+
+                            form.setFieldsValue({
+                                schoolId: null
+                            });
+                        }
+                    }
                 },
                 {
                     eleName: 'Select',
@@ -222,6 +232,17 @@ const UpdateStudent = (props) => {
         </Row>
         ;
 
+    
+    const getSchoolList = (cityId) => {
+        const submitData = {
+            cityId
+        };
+
+        dispatch({
+            type: 'exGlobal/getSchoolList',
+            payload: submitData
+        });
+    }
 
     const handleSubmit = (data) => {
         const { dispatch } = props;
@@ -263,6 +284,9 @@ const UpdateStudent = (props) => {
         }).then((res) => {
             form.resetFields();
             console.log('res___', res);
+
+            // 获取学校列表
+            getSchoolList(res.r.cityId);
         });
     };
 
@@ -278,9 +302,7 @@ const UpdateStudent = (props) => {
         });
 
         // 获取学校列表
-        dispatch({
-            type: 'exGlobal/getSchoolList'
-        });
+        getSchoolList();
     }, []);
 
     return (

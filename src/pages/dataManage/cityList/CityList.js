@@ -65,6 +65,8 @@ const CityList = (props) => {
     {
       title: cityListFieldName['operate'],
       key: 'operate',
+      fixed: 'right',
+      width: 200,
       render: (data, record) => (
         <>
           {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
@@ -83,6 +85,8 @@ const CityList = (props) => {
   // 新增
   const handleAdd = () => {
     setAddVisable(true);
+
+    form.resetFields();
   };
   const addSubmit = (value) => {
     const { dispatch } = props;
@@ -113,6 +117,7 @@ const CityList = (props) => {
     setRecordData(data);
     setUpdateVisable(true);
 
+    form.resetFields();
     form.setFieldsValue({
       name: data.name
     });
@@ -251,6 +256,7 @@ const CityList = (props) => {
       }
 
       <StandardTable
+        scroll={{ x: 400 }}
         rowKey="cityId"
         loading={loading}
         columns={columns}

@@ -14,8 +14,8 @@ const ShowTimelineView = (props) => {
             <Chart autoFit padding={[10, 20, 50, 40]} height={300}
                 data={data}
                 scale={{
-                    linear: {
-                        min: 1
+                    people: {
+                        min: 0
                     }
                 }}
             >

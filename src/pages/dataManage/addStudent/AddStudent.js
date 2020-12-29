@@ -5,6 +5,7 @@ import {
     codeResult,
     notifications
 } from '@/utils/myUtils/commonUtils';
+import { history } from "umi";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { formatCity, formatSchool } from "@/utils/myUtils/renderUtils";
 import FormList from '@/components/FormList';
@@ -137,6 +138,10 @@ const AddStudent = (props) => {
                         // 获取学校列表
                         if(value){
                             getSchoolList(value);
+
+                            form.setFieldsValue({
+                                schoolId: null
+                            });
                         }
                     }
                 },
@@ -150,10 +155,7 @@ const AddStudent = (props) => {
                             required: true,
                             message: '请输入学校'
                         }
-                    ],
-                    onChange: function(){
-                        console.log(2)
-                    }
+                    ]
                 }
             ]
         }
@@ -231,16 +233,11 @@ const AddStudent = (props) => {
     const getSchoolList = (cityId) => {
         const submitData = {
             cityId
-        }
+        };
 
-        console.log(submitData)
-
-        // 获取学校列表
         dispatch({
             type: 'exGlobal/getSchoolList',
             payload: submitData
-        }).then((res) => {
-            
         });
     } 
 
@@ -258,6 +255,7 @@ const AddStudent = (props) => {
                 if (codeResult(res)) {
                     // 成功
                     notifications('success', '操作成功', '');
+                    history.push('/dataManage/studentList');
                 } else {
                     // 失败
                     // notifications('error', '系统提示', res.message);
@@ -268,12 +266,19 @@ const AddStudent = (props) => {
         }
     };
 
+    const handleCancel = () => {
+        history.push('/dataManage/studentList');
+    }
+
     // didMount
     useEffect(() => {
         // 获取城区列表
         dispatch({
             type: 'exGlobal/getCityList'
         });
+
+        // 获取学校列表
+        getSchoolList();
     }, []);
 
     return (
@@ -284,6 +289,7 @@ const AddStudent = (props) => {
                 element={element}
                 extraDom={extraDom}
                 onSubmit={handleSubmit}
+                onCancel={handleCancel}
             />
         </React.Fragment>
     );

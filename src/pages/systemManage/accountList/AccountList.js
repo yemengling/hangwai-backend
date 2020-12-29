@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Popconfirm, Divider } from 'antd';
+import { Form, Button, Popconfirm, Divider } from 'antd';
 import { connect } from 'dva';
 import { getAuthorityOpreateArea, getAuthorityOpreatDetail } from '@/utils/myUtils/authority';
 import {
@@ -42,6 +42,7 @@ const AccountList = (props) => {
         dispatch,
         exGlobal: { menuData, roleList }
     } = props;
+    const [form] = Form.useForm();
 
     // 获取操作的权限
     const areaArr = getAuthorityOpreateArea(menuData, listAuth);
@@ -74,6 +75,8 @@ const AccountList = (props) => {
         {
             title: accountListFieldName['operate'],
             key: 'operate',
+            fixed: 'right',
+            width: 250,
             render: (data, record) => (
                 <>
                     {authDetail.update === true && <a onClick={() => handleUpdate(data)}>编辑</a>}
@@ -94,6 +97,8 @@ const AccountList = (props) => {
     // 新增
     const handleAdd = () => {
         setAddVisable(true);
+
+        form.resetFields();
     };
     const addSubmit = (value) => {
         const { dispatch } = props;
@@ -123,6 +128,12 @@ const AccountList = (props) => {
     const handleUpdate = (data) => {
         setRecordData(data);
         setUpdateVisable(true);
+
+        form.resetFields();
+        form.setFieldsValue({
+            account: data.account,
+            roleId: data.roleId
+        });
     };
     const updateSubmit = (data) => {
         const { dispatch } = props;
@@ -185,16 +196,15 @@ const AccountList = (props) => {
 
     // 重置密码
     const handleReset = (data) => {
-        setRecordData(data);
         setResetVisable(true);
+
+        form.resetFields();
     }
     const resetSubmit = (data) => {
         const { dispatch } = props;
         const submitData = data;
 
         submitData.account = recordData.account;
-
-        console.log(submitData);
 
         dispatch({
             type: `${modelsName}/resetAccountInfo`,
@@ -297,6 +307,7 @@ const AccountList = (props) => {
             }
 
             <StandardTable
+                scroll={{ x: 600 }}
                 rowKey="userId"
                 loading={loading}
                 columns={columns}
@@ -311,6 +322,7 @@ const AccountList = (props) => {
             />
 
             <AddAccountListView
+                form={form}
                 modalVisible={addVisable}
                 title="新增"
                 roleList={roleList}
@@ -319,6 +331,7 @@ const AccountList = (props) => {
             />
 
             <UpdateAccountListView
+                form={form}
                 modalVisible={updateVisable}
                 title="编辑"
                 roleList={roleList}
@@ -328,6 +341,7 @@ const AccountList = (props) => {
             />
 
             <ResetAccountListView
+                form={form}
                 modalVisible={resetVisable}
                 title="重置密码"
                 okHandle={resetSubmit}

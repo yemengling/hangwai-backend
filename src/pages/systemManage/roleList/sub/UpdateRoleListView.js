@@ -1,12 +1,10 @@
 import React from 'react';
-import { Form } from 'antd';
 import { roleListFieldName } from "@/pages/systemManage/roleList/RoleList";
-import { formatAuthority } from "@/utils/myUtils/renderUtils";
+import { formatPermission, formatTree } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const UpdateRoleListView = (props) => {
-    const { modalVisible, title, menuData, recordData, okHandle, onCancel } = props;
-    const [form] = Form.useForm();
+    const { form, modalVisible, title, permissionList, recordData, okHandle, onCancel } = props;
 
     const element = [
         {
@@ -37,9 +35,9 @@ const UpdateRoleListView = (props) => {
             eleName: 'TreeSelect',
             title: '权限',
             name: 'permissionIds',
-            initialValue: [1001],
+            initialValue: formatTree(recordData.permissionIds),
             spanNum: 24,
-            dataTree: formatAuthority(menuData),
+            dataTree: formatPermission(permissionList),
             rules: [
                 {
                     required: true

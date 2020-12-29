@@ -1,13 +1,12 @@
 import React from 'react';
-import { Form } from 'antd';
 import { roleListFieldName } from "@/pages/systemManage/roleList/RoleList";
-import { formatAuthority } from "@/utils/myUtils/renderUtils";
+import { formatPermission } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
+import { fromPairs } from 'lodash';
 
 const AddRoleListView = (props) => {
-    const { modalVisible, title, menuData, okHandle, onCancel } = props;
-    const [form] = Form.useForm();
-
+    const { form, modalVisible, title, permissionList, okHandle, onCancel } = props;
+    
     const element = [
         {
             eleName: 'Input',
@@ -36,7 +35,7 @@ const AddRoleListView = (props) => {
             title: '权限',
             name: 'permissionIds',
             spanNum: 24,
-            dataTree: formatAuthority(menuData),
+            dataTree: formatPermission(permissionList),
             rules: [
                 {
                     required: true

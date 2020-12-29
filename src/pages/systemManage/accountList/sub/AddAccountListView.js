@@ -1,12 +1,10 @@
 import React from 'react';
-import { Form } from 'antd';
 import { accountListFieldName } from "@/pages/systemManage/accountList/AccountList";
 import { formatRole } from "@/utils/myUtils/renderUtils";
 import MyModal from "@/components/MyModal";
 
 const AddAccountListView = (props) => {
-    const { modalVisible, title, roleList, okHandle, onCancel } = props;
-    const [form] = Form.useForm();
+    const { form, modalVisible, title, roleList, okHandle, onCancel } = props;
 
     const element = [
         {

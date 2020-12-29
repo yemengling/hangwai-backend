@@ -27,6 +27,7 @@ const opreAuth = {
 export const studentListFieldName = {
   studentId: 'ID',
   name: '姓名',
+  sex: '性别',
   date: '年月',
   city: '城区',
   school: '学校',
@@ -66,6 +67,16 @@ const StudentList = (props) => {
       title: studentListFieldName['name'],
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: studentListFieldName['sex'],
+      dataIndex: 'sex',
+      key: 'sex',
+      render: (data, record) => (
+        <>
+          {data.sex == 1 ? '男' : '女'}
+        </>
+      )
     },
     {
       title: studentListFieldName['date'],
@@ -108,6 +119,8 @@ const StudentList = (props) => {
       title: studentListFieldName['operate'],
       dataIndex: 'operate',
       key: 'operate',
+      fixed: 'right',
+      width: 200,
       render: (data, record) => (
         <>
           {authDetail.update === true && <Link to={`/dataManage/updateStudent?id=${record.studentId}`}>编辑</Link>}
@@ -274,6 +287,7 @@ const StudentList = (props) => {
       }
 
       <StandardTable
+        scroll={{ x: 1600 }}
         rowKey="studentId"
         loading={loading}
         columns={columns}
