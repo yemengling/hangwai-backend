@@ -12,6 +12,17 @@ export const getMenuData = (params) => {
     return request(url);
 };
 
+// 获取权限
+export const getPermissionList = (params) => {
+    let url = `/api/base/user/permission/permissionList`;
+
+    const valueArr = [];
+
+    url = buildUrl({ url, valueArr, value: params });
+
+    return request(url);
+};
+
 // 获取城区列表
 export const getCityList = (params) => {
     let url = `/api/city/all`;
@@ -25,15 +36,13 @@ export const getCityList = (params) => {
 
 // 获取学校列表
 export const getSchoolList = (params) => {
-    let url = `/api/school/all`;
+    let url = `/api/school/all?`;
 
-    console.log(params)
+    const valueArr = ['cityId'];
 
-    if(params){
-        return request(`${url}/${params.cityId}`);
-    }else{
-        return request(url);
-    }
+    url = buildUrl({ url, valueArr, value: params });
+
+    return request(url);
 };
 
 // 获取角色列表
