@@ -140,7 +140,7 @@ class FormList extends Component {
         }
 
         if (comFun.length > 1) {
-            return <Col key={key} span={_props.spanNum}>
+            return <Col key={key} span={_props.spanNum ? _props.spanNum : 20}>
                 <Form.Item {...formItemLayout} style={{ marginBottom: 0 }}
                     label={title} required={_props.required}
                 >
@@ -148,7 +148,7 @@ class FormList extends Component {
                 </Form.Item>
             </Col>
         } else {
-            return <Col key={key} span={_props.spanNum}>
+            return <Col key={key} span={_props.spanNum? _props.spanNum : 20}>
                 <Form.Item {...formItemLayout}
                     label={title} name={name}
                     rules={_props.rules}

@@ -51,8 +51,6 @@ export const getTreeSelect = ({ dataTree, placeholder, initialValue }) => {
     //     this.setState({ value });
     // }
 
-    console.log(SHOW_PARENT)
-
     return (
         <TreeSelect
             treeData={dataTree}

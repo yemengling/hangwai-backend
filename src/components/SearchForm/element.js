@@ -21,7 +21,7 @@ export const getInput = ({ placeholder }) => {
 export const getSelect = ({ dataSelect, placeholder }) => {
     return (
         <Select placeholder={placeholder}>
-            <Option key='' value=''>默认</Option>
+            <Option key='' value=''>全部</Option>
             
             {dataSelect && dataSelect[0] && dataSelect.map((item, key) => {
                 return (

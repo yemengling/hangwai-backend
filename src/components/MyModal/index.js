@@ -103,8 +103,27 @@ class MyModal extends Component {
 
     // 表单元素格式
     formCol = ({ key, title, name, comFun, _props }) => {
-        return <Col key={key} span={_props.spanNum}>
-            <Form.Item label={title} name={name} initialValue={_props.initialValue} rules={_props.rules}>
+        const { formLayout } = this.props;
+        let formItemLayout = {};
+
+        if (formLayout) {
+            formItemLayout = formLayout.itemLayout;
+        } else {
+            formItemLayout = {
+                labelCol: {
+                    span: 5
+                },
+                wrapperCol: {
+                    span: 15
+                }
+            }
+        }
+
+        return <Col key={key} span={_props.spanNum ? _props.spanNum : 20}>
+            <Form.Item {...formItemLayout} 
+                label={title} name={name} 
+                initialValue={_props.initialValue} rules={_props.rules}
+            >
                 {comFun}
             </Form.Item>
         </Col>
