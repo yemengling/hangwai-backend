@@ -9,7 +9,8 @@ export default {
   dev: {
     '/api/': {
       // target: 'https://preview.pro.ant.design',
-      target: 'http://192.168.43.216:8403',
+      target: 'http://xy.pj.yiyuen.com',
+      // target: 'http://192.168.43.216:8403',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
