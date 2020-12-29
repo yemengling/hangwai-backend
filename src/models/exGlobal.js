@@ -1,9 +1,10 @@
-import { getMenuData, getCityList, getSchoolList, getRoleList } from "@/services/exGlobalApi";
+import { getMenuData, getPermissionList, getCityList, getSchoolList, getRoleList } from "@/services/exGlobalApi";
 
 export default {
     namespace: 'exGlobal',
     state: {
         menuData: [],
+        permissionList: [],
         cityList: [],
         schoolList: [],
         roleList: [],
@@ -17,6 +18,14 @@ export default {
                 payload: response.r
             });
         },
+        * getPermissionList(_, { put, call }) {
+            const response = yield call(getPermissionList);
+
+            yield put({
+                type: 'savePermissionList',
+                payload: response.r
+            });
+        },
         * getCityList(_, { put, call }) {
             const response = yield call(getCityList);
 
@@ -25,8 +34,8 @@ export default {
                 payload: response.r
             });
         },
-        * getSchoolList(_, { put, call }) {
-            const response = yield call(getSchoolList);
+        * getSchoolList({ payload }, { put, call }) {
+            const response = yield call(getSchoolList, payload);
 
             yield put({
                 type: 'saveSchoolList',
@@ -35,7 +44,7 @@ export default {
         },
         * getRoleList(_, { put, call }) {
             const response = yield call(getRoleList);
-            
+
             yield put({
                 type: 'saveRoleList',
                 payload: response.r
@@ -47,6 +56,12 @@ export default {
             return {
                 ...state,
                 menuData: payload
+            }
+        },
+        savePermissionList(state, { payload }) {
+            return {
+                ...state,
+                permissionList: payload
             }
         },
         saveCityList(state, { payload }) {
