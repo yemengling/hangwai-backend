@@ -5,7 +5,7 @@ import request from '@/utils/request';
 export const getStudentList = (params) => {
   let url = `/api/student?`;
 
-  const valueArr = ['beginDate', 'endDate', 'cityId', 'schoolId', 'pageSize', 'pageIndex'];
+  const valueArr = ['beginDate', 'endDate', 'name', 'cityId', 'schoolId', 'isAdmit', 'pageSize', 'pageIndex'];
 
   url = buildUrl({ url, valueArr, value: params });
 
