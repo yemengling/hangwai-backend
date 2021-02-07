@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PageHeader } from 'antd';
+import { PageHeader, Tabs } from 'antd';
 import { connect } from 'dva';
 import {
     onChangePage,
@@ -7,6 +7,7 @@ import {
 } from '@/utils/myUtils/commonUtils';
 import { useLocation } from "umi";
 import StandardTable from '@/components/StandardTable';
+import ShowTimelineView from "@/pages/dataManage/scoreDetail/sub/ShowTimelineView";
 
 // 字段名称
 export const scoreDetailFieldName = {
@@ -22,6 +23,7 @@ export const scoreDetailFieldName = {
 const modelsName = 'scoreDetail';
 
 const ScoreDetail = (props) => {
+    const { TabPane } = Tabs;
     const {
         scoreDetail: { isSearch, pagination, data },
         loading,
@@ -30,6 +32,9 @@ const ScoreDetail = (props) => {
 
     // 地址栏
     const location = useLocation();
+
+    // state
+    const [timelineData, setTimelineData] = useState([]);
 
     // columns
     const columns = [
@@ -65,6 +70,9 @@ const ScoreDetail = (props) => {
         }
     ];
 
+
+    // tab切换
+    const changeTab = (key) => {}
 
     // 分页页码
     const onChang = (pageNumber) => {
@@ -124,6 +132,76 @@ const ScoreDetail = (props) => {
                 current: 1
             },
         });
+
+        dispatch({
+            type: `${modelsName}/getTimelineData`
+        }).then((res) => {
+            var oData = [
+                {
+                    name: '第一部分',
+                    score: 4,
+                    paper: '试卷一'
+                },
+                {
+                    name: '第二部分',
+                    score: 12,
+                    paper: '试卷一'
+                },
+                {
+                    name: '第三部分',
+                    score: 12,
+                    paper: '试卷一'
+                },
+                {
+                    name: '第四部分',
+                    score: 22,
+                    paper: '试卷一'
+                },
+                {
+                    name: '第一部分',
+                    score: 13,
+                    paper: '试卷二'
+                },
+                {
+                    name: '第二部分',
+                    score: 24,
+                    paper: '试卷二'
+                },
+                {
+                    name: '第三部分',
+                    score: 10,
+                    paper: '试卷二'
+                },
+                {
+                    name: '第四部分',
+                    score: 34,
+                    paper: '试卷二'
+                },
+                {
+                    name: '第一部分',
+                    score: 8.5,
+                    paper: '平均分'
+                },
+                {
+                    name: '第二部分',
+                    score: 18,
+                    paper: '平均分'
+                },
+                {
+                    name: '第三部分',
+                    score: 11,
+                    paper: '平均分'
+                },
+                {
+                    name: '第四部分',
+                    score: 28,
+                    paper: '平均分'
+                }
+            ];
+
+            setTimelineData(oData);
+            console.log('res___', res);
+        });
     }, []);
 
     return (
@@ -136,19 +214,27 @@ const ScoreDetail = (props) => {
                 title="返回"
             />
 
-            <StandardTable
-                rowKey="id"
-                loading={loading}
-                columns={columns}
-                dataSource={data && data.data}
-                showSizeChanger={pagination.showSizeChanger}
-                defaultCurrent={pagination.currentPageIndex}
-                defaultPageSize={pagination.currentPageSize}
-                current={pagination.current}
-                total={data && data.totalCount}
-                onChange={onChang}
-                onShowSizeChange={onShowSizeChange}
-            />
+            <Tabs defaultActiveKey="1" type="card" onChange={changeTab}>
+                <TabPane tab="列表" key="list">
+                    <StandardTable
+                        rowKey="id"
+                        loading={loading}
+                        columns={columns}
+                        dataSource={data && data.data}
+                        showSizeChanger={pagination.showSizeChanger}
+                        defaultCurrent={pagination.currentPageIndex}
+                        defaultPageSize={pagination.currentPageSize}
+                        current={pagination.current}
+                        total={data && data.totalCount}
+                        onChange={onChang}
+                        onShowSizeChange={onShowSizeChange}
+                    />
+                </TabPane>
+
+                <TabPane tab="折线图" key="timeline">
+                    <ShowTimelineView data={timelineData} />
+                </TabPane>
+            </Tabs>
         </React.Fragment>
     );
 };

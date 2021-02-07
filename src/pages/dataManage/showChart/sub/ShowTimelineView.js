@@ -6,26 +6,41 @@ import {
 
 const ShowTimelineView = (props) => {
     // 数据源
-    const { data } = props;
+    const { title, type, data } = props;
 
     return (
         <React.Fragment>
-            <h2>录取人数最高前10所小学</h2>
-            <Chart autoFit padding={[10, 20, 50, 40]} height={300}
-                data={data}
-                scale={{
-                    people: {
-                        min: 0
+            <div style={{paddingBottom: "50px"}}>
+                <h2>{title}</h2>
+                <Chart autoFit padding={[10, 20, 50, 40]} height={300}
+                    data={data}
+                    scale={{
+                        people: {
+                            min: 0
+                        },
+                        score: {
+                            min: 0
+                        }
+                    }}
+                >
+                    {
+                        type == "1" ?
+                            <LineAdvance
+                                shape="smooth"
+                                point
+                                area
+                                position="school*people"
+                            /> :
+                            <LineAdvance
+                                shape="smooth"
+                                point
+                                area
+                                position="name*score"
+                                color="paper"
+                            />
                     }
-                }}
-            >
-                <LineAdvance
-                    shape="smooth"
-                    point
-                    area
-                    position="school*people"
-                />
-            </Chart>
+                </Chart>
+            </div>
         </React.Fragment>
     )
 }

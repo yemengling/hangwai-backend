@@ -1,5 +1,5 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getPieData, getBarData, getTimelineData } from '@/services/dataManage/showChartApi';
+import { getPieData, getBarData, getTimelineData1, getTimelineData2, getTimelineData3 } from '@/services/dataManage/showChartApi';
 
 export default {
     namespace: 'showChart',
@@ -22,8 +22,20 @@ export default {
         },
 
         // 获取折线图
-        * getTimelineData({ payload }, { call, put }) {
-            const response = yield call(getTimelineData, payload);
+        * getTimelineData1({ payload }, { call, put }) {
+            const response = yield call(getTimelineData1, payload);
+            
+            return response
+        },
+
+        * getTimelineData2({ payload }, { call, put }) {
+            const response = yield call(getTimelineData2, payload);
+            
+            return response
+        },
+
+        * getTimelineData3({ payload }, { call, put }) {
+            const response = yield call(getTimelineData3, payload);
             
             return response
         },

@@ -1,5 +1,5 @@
 import { codeResult } from '@/utils/myUtils/commonUtils';
-import { getScoreDetail } from '@/services/dataManage/scoreDetailApi';
+import { getScoreDetail, getTimelineData } from '@/services/dataManage/scoreDetailApi';
 
 export default {
   namespace: 'scoreDetail',
@@ -35,7 +35,7 @@ export default {
         total: 1
       };
 
-      for(let i = 0; i < asPapers.length; i++){
+      for (let i = 0; i < asPapers.length; i++) {
         const oPapers = {
           id: i + 1,
           paper: asPapers[i].paper,
@@ -56,6 +56,13 @@ export default {
       }
 
       return response;
+    },
+
+    // 获取折线图
+    * getTimelineData({ payload }, { call, put }) {
+      const response = yield call(getTimelineData, payload);
+
+      return response
     },
   },
 

@@ -16,6 +16,11 @@ const StudentListSearchForm = (props) => {
             picker: 'year'
         },
         {
+            eleName: 'Input',
+            title: studentListFieldName['name'],
+            name: 'name'
+        },
+        {
             eleName: 'Select',
             title: studentListFieldName['city'],
             name: 'cityId',
@@ -26,6 +31,21 @@ const StudentListSearchForm = (props) => {
             title: studentListFieldName['school'],
             name: 'schoolId',
             dataSelect: formatSchool(schoolList)
+        },
+        {
+            eleName: 'Select',
+            title: studentListFieldName['isAdmit'],
+            name: 'isAdmit',
+            dataSelect: [
+                {
+                    id: true,
+                    text: '是'
+                },
+                {
+                    id: false,
+                    text: '否'
+                }
+            ]
         }
     ];
 
