@@ -134,72 +134,12 @@ const ScoreDetail = (props) => {
         });
 
         dispatch({
-            type: `${modelsName}/getTimelineData`
+            type: `${modelsName}/getTimelineData`,
+            payload: {
+                studentId: location.query.id,
+            }
         }).then((res) => {
-            var oData = [
-                {
-                    name: '第一部分',
-                    score: 4,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第二部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第三部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第四部分',
-                    score: 22,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第一部分',
-                    score: 13,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第二部分',
-                    score: 24,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第三部分',
-                    score: 10,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第四部分',
-                    score: 34,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第一部分',
-                    score: 8.5,
-                    paper: '平均分'
-                },
-                {
-                    name: '第二部分',
-                    score: 18,
-                    paper: '平均分'
-                },
-                {
-                    name: '第三部分',
-                    score: 11,
-                    paper: '平均分'
-                },
-                {
-                    name: '第四部分',
-                    score: 28,
-                    paper: '平均分'
-                }
-            ];
-
-            setTimelineData(oData);
+            setTimelineData(res.r);
             console.log('res___', res);
         });
     }, []);
