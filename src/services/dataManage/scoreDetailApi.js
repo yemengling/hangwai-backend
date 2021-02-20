@@ -8,9 +8,9 @@ export const getScoreDetail = (params) => {
 
 // 获取折线图
 export const getTimelineData = (params) => {
-  let url = `/api/bi/groupSchool`;
+  let url = `/api/bi/theStudent?`;
 
-  const valueArr = [];
+  const valueArr = ['studentId'];
 
   url = buildUrl({ url, valueArr, value: params });
 
