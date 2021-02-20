@@ -130,13 +130,13 @@ const ScoreDetail = (props) => {
             payload: {
                 ...pagination,
                 current: 1
-            },
+            }
         });
 
         dispatch({
             type: `${modelsName}/getTimelineData`,
             payload: {
-                studentId: location.query.id,
+                studentId: location.query.id
             }
         }).then((res) => {
             setTimelineData(res.r);
