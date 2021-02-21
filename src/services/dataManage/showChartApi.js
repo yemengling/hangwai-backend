@@ -3,53 +3,53 @@ import request from '@/utils/request';
 
 // 获取饼状图
 export const getPieData = (params) => {
-    let url = `/api/bi/groupAdmit`;
+  let url = `/api/bi/groupAdmit`;
 
-    const valueArr = [];
+  const valueArr = [];
 
-    url = buildUrl({ url, valueArr, value: params });
+  url = buildUrl({ url, valueArr, value: params });
 
-    return request(url);
+  return request(url);
 };
 
 // 获取柱状图
 export const getBarData = (params) => {
-    let url = `/api/bi/groupCity`;
+  let url = `/api/bi/groupCity`;
 
-    const valueArr = [];
+  const valueArr = [];
 
-    url = buildUrl({ url, valueArr, value: params });
+  url = buildUrl({ url, valueArr, value: params });
 
-    return request(url);
+  return request(url);
 };
 
 // 获取折线图
 export const getTimelineData1 = (params) => {
-    let url = `/api/bi/groupSchool`;
+  let url = `/api/bi/groupSchool`;
 
-    const valueArr = [];
+  const valueArr = [];
 
-    url = buildUrl({ url, valueArr, value: params });
+  url = buildUrl({ url, valueArr, value: params });
 
-    return request(url);
+  return request(url);
 };
 
 export const getTimelineData2 = (params) => {
-    let url = `/api/bi/groupSchool`;
+  let url = `/api/bi/studentsAvgScore?`;
 
-    const valueArr = [];
+  const valueArr = ['isAdmit'];
 
-    url = buildUrl({ url, valueArr, value: params });
+  url = buildUrl({ url, valueArr, value: params });
 
-    return request(url);
+  return request(url);
 };
 
 export const getTimelineData3 = (params) => {
-    let url = `/api/bi/groupSchool`;
+  let url = `/api/bi/studentsAvgScore`;
 
-    const valueArr = [];
+  const valueArr = [];
 
-    url = buildUrl({ url, valueArr, value: params });
+  url = buildUrl({ url, valueArr, value: params });
 
-    return request(url);
+  return request(url);
 };
