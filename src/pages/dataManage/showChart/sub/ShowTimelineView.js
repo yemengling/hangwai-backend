@@ -8,12 +8,14 @@ const ShowTimelineView = (props) => {
     // 数据源
     const { title, type, data } = props;
 
+    console.log(data)
+
     return (
         <React.Fragment>
             <div style={{ paddingBottom: "50px" }}>
                 <h2>{title}</h2>
                 <Chart autoFit padding={[10, 20, 60, 40]} height={300}
-                    data={data}
+                    data={data || []}
                     scale={{
                         people: {
                             min: 0
@@ -24,7 +26,7 @@ const ShowTimelineView = (props) => {
                     }}
                 >
                     {
-                        type == "1" ?
+                        type === "1" ?
                             <LineAdvance
                                 shape="smooth"
                                 point

@@ -64,102 +64,19 @@ const ShowChart = (props) => {
         });
 
         dispatch({
-            type: `${modelsName}/getTimelineData2`
+            type: `${modelsName}/getTimelineData2`,
+            payload: {
+                isAdmit: true
+            }
         }).then((res) => {
-            var oData = [
-                {
-                    name: '第一部分',
-                    score: 4,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第二部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第三部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第四部分',
-                    score: 22,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第一部分',
-                    score: 13,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第二部分',
-                    score: 24,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第三部分',
-                    score: 10,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第四部分',
-                    score: 34,
-                    paper: '试卷二'
-                }
-            ];
-
-            setTimelineData2(oData);
+            setTimelineData2(res.r);
             console.log('res___', res);
         });
 
         dispatch({
             type: `${modelsName}/getTimelineData3`
         }).then((res) => {
-            var oData = [
-                {
-                    name: '第一部分',
-                    score: 4,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第二部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第三部分',
-                    score: 12,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第四部分',
-                    score: 22,
-                    paper: '试卷一'
-                },
-                {
-                    name: '第一部分',
-                    score: 13,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第二部分',
-                    score: 24,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第三部分',
-                    score: 10,
-                    paper: '试卷二'
-                },
-                {
-                    name: '第四部分',
-                    score: 34,
-                    paper: '试卷二'
-                }
-            ];
-
-            setTimelineData3(oData);
+            setTimelineData3(res.r);
             console.log('res___', res);
         });
     };
@@ -183,7 +100,7 @@ const ShowChart = (props) => {
                 <TabPane tab="折线图" key="timeline">
                     <ShowTimelineView title="录取人数最高前10所小学" type="1" data={timelineData1} />
                     <ShowTimelineView title="录取学生成绩变化" type="2" data={timelineData2} />
-                    <ShowTimelineView title="总生成绩变化" type="2" data={timelineData3} />
+                    <ShowTimelineView title="所有学生成绩变化" type="2" data={timelineData3} />
                 </TabPane>
             </Tabs>
         </React.Fragment>

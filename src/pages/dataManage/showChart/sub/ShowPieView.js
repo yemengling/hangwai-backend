@@ -10,6 +10,7 @@ const ShowPieView = (props) => {
     return (
         <React.Fragment>
             <DonutChart
+                height={380}
                 data={data || []}
                 title={{
                     visible: true,
