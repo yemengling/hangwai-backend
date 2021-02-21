@@ -8,8 +8,6 @@ const ShowTimelineView = (props) => {
     // 数据源
     const { title, type, data } = props;
 
-    console.log(data)
-
     return (
         <React.Fragment>
             <div style={{ paddingBottom: "50px" }}>
