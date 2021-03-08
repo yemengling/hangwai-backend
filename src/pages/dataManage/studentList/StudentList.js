@@ -74,7 +74,7 @@ const StudentList = (props) => {
       key: 'sex',
       render: (data, record) => (
         <>
-          {data.sex == 1 ? '男' : '女'}
+          {record.sex == 1 ? '男' : '女'}
         </>
       )
     },
