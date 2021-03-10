@@ -43,6 +43,7 @@ const AccountList = (props) => {
         exGlobal: { menuData, roleList }
     } = props;
     const [form] = Form.useForm();
+    const [form2] = Form.useForm();
 
     // 获取操作的权限
     const areaArr = getAuthorityOpreateArea(menuData, listAuth);
@@ -196,9 +197,10 @@ const AccountList = (props) => {
 
     // 重置密码
     const handleReset = (data) => {
+        setRecordData(data);
         setResetVisable(true);
 
-        form.resetFields();
+        form2.resetFields();
     }
     const resetSubmit = (data) => {
         const { dispatch } = props;
@@ -341,7 +343,7 @@ const AccountList = (props) => {
             />
 
             <ResetAccountListView
-                form={form}
+                form={form2}
                 modalVisible={resetVisable}
                 title="重置密码"
                 okHandle={resetSubmit}
